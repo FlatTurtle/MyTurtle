@@ -1,3 +1,4 @@
+{{#connections}}
 <div class="header bg-color">
 	<h2>Planning your route</h2>
 </div>
@@ -18,7 +19,13 @@
 						<h3>{{station}}</h3>
 					</div>
 					<div class="time">
-						<p>{{time}}</p>
+						{{#delay}}
+							<p class="red">{{time}}</p>
+							<p class="red">+{{delay}}</p>
+						{{/delay}}
+						{{^delay}}
+							<p>{{time}}</p>
+						{{/delay}}
 					</div>
 				</li>
 				{{/departure}}
@@ -41,7 +48,13 @@
 									<p>{{platform}}</p>
 								</div>
 								<div class="time second">
-									<p>{{time}}</p>
+									{{#delay}}
+										<p class="red">{{time}}</p>
+										<p class="red">+{{delay}}</p>
+									{{/delay}}
+									{{^delay}}
+										<p>{{time}}</p>
+									{{/delay}}
 								</div>
 							{{/departure}}
 						</li>
@@ -59,7 +72,13 @@
 						<h3>{{station}}</h3>
 					</div>
 					<div class="time">
-						<p>{{time}}</p>
+						{{#delay}}
+							<p class="red">{{time}}</p>
+							<p class="red">+{{delay}}</p>
+						{{/delay}}
+						{{^delay}}
+							<p>{{time}}</p>
+						{{/delay}}
 					</div>
 				</li>
 				{{/arrival}}
@@ -72,3 +91,35 @@
 		</div>
 	</div>
 </div>
+{{/connections}}
+{{#liveboard}}
+<div class="header bg-color">
+	<h2>{{type}}: {{#location}}{{name}}{{/location}}</h2>
+</div>
+<div class="results">
+	<ul>
+		{{#results}}
+		<li>
+			<div>
+				<div class="square light">
+					<p>{{#platform}}{{name}}{{/platform}}</p>
+				</div>
+				<div class="square {{type}}">
+					<p>{{type}}</p>
+				</div>
+				<h3>{{direction}}</h3>
+			</div>
+			<div class="time">
+				{{#delay}}
+					<p class="red">{{time}}</p>
+					<p class="red">+{{delay}}</p>
+				{{/delay}}
+				{{^delay}}
+					<p>{{time}}</p>
+				{{/delay}}
+			</div>
+		</li>
+		{{/results}}
+	<ul>
+</div>
+{{/liveboard}}

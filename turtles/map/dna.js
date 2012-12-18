@@ -33,7 +33,6 @@
 			var self = this;
 
 			if(this.traffic != null){
-				console.log('j');
 				// remove old layer
 				this.traffic.setMap(null);
 				this.traffic = null;
