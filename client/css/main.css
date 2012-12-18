@@ -1038,6 +1038,8 @@ footer #client-logo {
    ========================================================================== */
 #black-screen {
 	background-color: #000;
+	background-size: contain;
+	background-position: center;
 	z-index: 99999999;
 	position: absolute;
 	height: 100%;

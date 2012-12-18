@@ -50,6 +50,7 @@
 		<script src="client/js/plugins/google.js?<?php echo $rand; ?>"></script>
 		<script src="client/js/plugins/power.js?<?php echo $rand; ?>"></script>
 		<script src="client/js/plugins/message.js?<?php echo $rand; ?>"></script>
+		<script src="client/js/plugins/overlay.js?<?php echo $rand; ?>"></script>
 		<script src="client/js/plugins/footer.js?<?php echo $rand; ?>"></script>
 
 		<script>
