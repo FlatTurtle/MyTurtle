@@ -11,7 +11,7 @@ var Overlay = {
 	element : null,
 
 	enable : function(url) {
-		this.element = $('<div id="black-screen" style="background-image:url(\''+url+'\');">/div>');
+		this.element = $('<div id="black-screen" style="background-image:url(\''+url+'\');"></div>');
 		$("body").append(this.element);
 
 		this.element.fadeIn();
