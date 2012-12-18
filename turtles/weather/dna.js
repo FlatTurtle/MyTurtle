@@ -55,7 +55,7 @@
             	// first item
             	if (results.length == 0) {
             		raining = parseInt(data[i].milimeter) != 0;
-            		data[i].text = "nu";
+            		data[i].text = "now";
             		data[i].raining = raining;
 
             		results.push(data[i]);
@@ -66,11 +66,11 @@
                 var diff = new Date((data[i].time - now)* 1000 + date.getTimezoneOffset() * 60000);
                 
                 if (diff.getHours() > 1)
-                    data[i].text = diff.format("in {h} uren");
+                    data[i].text = diff.format("in {h} hours");
                 else if (diff.getHours() == 1)
-                    data[i].text = diff.format("in {h} uur");
+                    data[i].text = diff.format("in 1 hour");
                 else
-                    data[i].text = diff.format("in {i} minuten");
+                    data[i].text = diff.format("in {i} minutes");
             	
                 // only add entries with change
             	if (raining && parseInt(data[i].milimeter) == 0) {

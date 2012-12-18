@@ -12,6 +12,7 @@
 
 		<link rel="stylesheet" href="client/css/normalize.css?<?php echo $rand; ?>">
 		<link rel="stylesheet" href="client/css/main.css?<?php echo $rand; ?>">
+		<link rel="stylesheet" href="client/css/leaflet.css?<?php echo $rand; ?>">
    		<link type="text/css" rel="stylesheet" href="//fast.fonts.com/cssapi/66253153-9c89-413c-814d-60d3ba0d6ac2.css"/>
 	</head>
 	<body>
@@ -35,6 +36,8 @@
 		<script src="client/js/libs/tinycolor.js?<?php echo $rand; ?>"></script>
 		<script src="client/js/libs/later.js?<?php echo $rand; ?>"></script>
 		<script src="client/js/libs/duration.js?<?php echo $rand; ?>"></script>
+		<script src="client/js/libs/leaflet.js?<?php echo $rand; ?>"></script>
+		<script src="client/js/libs/wax.leaf.min.js?<?php echo $rand; ?>"></script>
 
 		<script src="client/js/core/functions.js?<?php echo $rand; ?>"></script>
 		<script src="client/js/core/screen.js?<?php echo $rand; ?>"></script>

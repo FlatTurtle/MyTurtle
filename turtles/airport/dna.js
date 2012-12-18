@@ -36,7 +36,7 @@
             // get the airport name
             var self = this;
             $.ajax({
-                url: "http://data.irail.be/spectql/Airports/Stations%7Bname,code,longitude,latitude%7D?code=='" + self.options.location + "':json",
+                url: "http://data.irail.be/spectql/Airports/Stations%7Bname,code,longitude,latitude%7D?code=='" + encodeURIComponent(self.options.location) + "':json",
                 dataType: "json",
                 success: function(data) {
                     if (data.spectql.length > 0) {
@@ -70,7 +70,7 @@
         },
         url : function() {
             var today = new Date();
-            var query = this.options.location + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
+            var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
             // remote source url
             // todo: add departures or arrivals

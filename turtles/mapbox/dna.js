@@ -12,11 +12,11 @@
 
 		initialize : function() {
 		    var self = this;
-		    
+
 			// default zoom
 			if (!this.options.zoom)
 				this.options.zoom = 13;
-			
+
 			// mapbox layer id
 			if (!this.options.layer)
 			    this.options.layer = 'examples.map-vyofok3q';
@@ -25,11 +25,11 @@
             if (typeof(mapbox) == 'undefined') {
                 // for some reason mapbox breaks mustache, so take a backup
                 var Mustache = window.Mustache;
-                
-    			$.getScript("http://api.tiles.mapbox.com/mapbox.js/v0.6.6/mapbox.js", function() {
+
+    			$.getScript("https://api.tiles.mapbox.com/mapbox.js/v0.6.7/mapbox.js", function() {
     			    // restore backup
     			    window.Mustache = Mustache;
-    			    
+
     			    // render map
     	            self.render();
     			});
@@ -43,7 +43,7 @@
 			$.get("turtles/mapbox/views/widget.html", function(template) {
 				// set window height to load
 				self.$el.height("100%");
-				
+
 				// render html
 				self.$el.empty();
 				self.$el.html(Mustache.render(template));
@@ -57,10 +57,26 @@
 				// create the mapbox object
 				self.map = mapbox.map(canvas);
 				self.map.addLayer(mapbox.layer().id(self.options.layer));
-				
+
 				var latitude = parseFloat(self.options.location.split(',')[0]);
                 var longitude = parseFloat(self.options.location.split(',')[1]);
-                
+
+                // Create an empty markers layer
+                var markerLayer = mapbox.markers.layer();
+
+                // Add a single feature to the markers layer.
+                markerLayer.add_feature({
+                	geometry: {
+                		// The order of coordinates here is lon, lat. This is because
+                		coordinates: [longitude, latitude]
+                	},
+                	properties: {
+                		'marker-color': '#333333',
+                		'marker-symbol': 'star-stroked'
+                	}
+                });
+                self.map.addLayer(markerLayer);
+
 				// center and zoom
 				self.map.centerzoom({ lat: latitude, lon: longitude }, self.options.zoom);
 			});
