@@ -9,11 +9,12 @@
 	var collection = Backbone.Collection.extend({
 		initialize : function(models, options) {
 			// prevents loss of 'this' inside methods
-			_.bindAll(this, "configure", "parse");
+			_.bindAll(this, "configure", "parse", "shown");
 
 			// bind events
 			this.on("born", this.configure);
 			this.on("reconfigure", this.configure);
+			this.on("shown", this.shown);
 
 			// default error value
 			options.error = false;
@@ -62,6 +63,9 @@
 					self.trigger("reset");
 				});
 			}
+		},
+		shown : function(){
+			this.trigger("reset");
 		},
 		parse : function(json) {
 			var today = new Date();
@@ -203,6 +207,11 @@
 
 				this.options.liveboard = data;
 			}
+
+			this.options.from = null;
+			this.options.to = null;
+			this.options.station = null;
+			this.options.type = null;
 		}
 	});
 
@@ -262,6 +271,14 @@
 						}
 					);
 				}
+
+				// reset results
+				this.options.liveboard = null;
+				this.options.connections = null;
+				this.options.route = null;
+			}else{
+				this.$el.empty();
+				this.$el.html("<div class='loading bg-color'><div class='message'>Calculating...</div></div>");
 			}
 		}
 	});

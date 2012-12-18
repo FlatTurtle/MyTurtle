@@ -17,6 +17,7 @@ window.Panes = (function() {
 	// hold a list of timers for each group
 	var timers = {};
 
+
 	/*
 	 * Create a new pane
 	 */
@@ -114,9 +115,12 @@ window.Panes = (function() {
 			Turtles.trigger($(this).data("id"), "shown");
 		});
 
+		if(timers['fullscreen'] != null)
+			clearTimeout(timers['fullscreen']);
+
 		// remove
 		if (duration != 0) {
-			setTimeout(function() {
+			timers['fullscreen'] = setTimeout(function() {
 				pane.el.removeClass("fullscreen");
 			}, duration);
 		}
