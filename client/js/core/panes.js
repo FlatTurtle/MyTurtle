@@ -50,7 +50,7 @@ window.Panes = (function() {
 			}
 
 			// append header
-			var tab = $('<div class="nav" data-pane="' + id + '"><div class="progress"></div>' + pane.title + '</div>')
+			var tab = $('<div class="nav" data-pane="' + id + '"><div class="progress"></div><span class="title">' + pane.title + '<span></div>')
 			header.append(tab);
 
 			// check if first pane and mark as active if so
@@ -164,6 +164,22 @@ window.Panes = (function() {
 	}
 
 	/*
+	 * Change pane options
+	 */
+	function options(id, options) {
+		var pane = panes[id];
+
+		// Duration
+		if(options.duration)
+			this.duration(id, options.duration);
+
+		// Update title
+		if(options.title){
+			$('.nav[data-pane='+id+'] .title', container).html(options.title);
+		}
+	}
+
+	/*
 	 * Rotate to the next pane in a group
 	 */
 	function rotate(group) {
@@ -271,6 +287,7 @@ window.Panes = (function() {
 		get : get,
 		order : order,
 		duration : duration,
+		options : options,
 		append : append,
 		fullscreen : fullscreen,
 		close : close,

@@ -59,7 +59,8 @@ window.Screen = (function() {
 					plugin.enable(config.plugins[name]);
 				}
 			} else {
-				plugin.disable();
+				if(plugin != null)
+					plugin.disable();
 			}
 		}
 
