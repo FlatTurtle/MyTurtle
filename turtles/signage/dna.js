@@ -9,6 +9,8 @@
 	var collection = Backbone.Collection.extend({
 		initialize : function(models, options) {
 			options.data = JSON.parse(options.data);
+
+			this.on("reconfigure", this.render);
 		}
 	});
 

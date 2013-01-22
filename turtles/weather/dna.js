@@ -35,6 +35,14 @@
 			});
 		},
 		url : function() {
+			// pick screen location when location is not set
+			if(self.options.location == null || self.options.location == ""){
+				self.options.location = Screen.location.geocode;
+				Screen.listeners[self.options.id] = true;
+			}else{
+				delete Screen.listeners[self.options.id];
+			}
+
 			var latitude = this.options.location.split(',')[0];
 			var longitude = this.options.location.split(',')[1];
 

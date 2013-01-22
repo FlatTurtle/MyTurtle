@@ -26,6 +26,7 @@
 			// render will be triggered when the google maps api is loaded
 			this.on("render", this.render);
 			this.on("shown", this.refresh);
+			this.on("reconfigure", this.render);
 
 			refreshInterval = setInterval(this.refresh, 300000);
 		},
@@ -79,6 +80,14 @@
 
 				// create the google map object
 				self.map = new google.maps.Map(canvas, options);
+
+				// pick screen location when location is not set
+				if(self.options.location == null || self.options.location == ""){
+					self.options.location = Screen.location.address;
+					Screen.listeners[self.options.id] = true;
+				}else{
+					delete Screen.listeners[self.options.id];
+				}
 
 				// convert location to geocode
 				var geocoder = new google.maps.Geocoder();

@@ -12,6 +12,7 @@
 
 		initialize : function() {
 			var self = this;
+			this.on("reconfigure", this.render);
 
 			// default zoom
 			if (!this.options.zoom)
@@ -57,6 +58,15 @@
 				// create the mapbox object
 				self.map = mapbox.map(canvas);
 				self.map.addLayer(mapbox.layer().id(self.options.layer));
+
+
+				// pick screen location when location is not set
+				if(self.options.location == null || self.options.location == ""){
+					self.options.location = Screen.location.geocode;
+					Screen.listeners[self.options.id] = true;
+				}else{
+					delete Screen.listeners[self.options.id];
+				}
 
 				var latitude = parseFloat(self.options.location.split(',')[0]);
 				var longitude = parseFloat(self.options.location.split(',')[1]);

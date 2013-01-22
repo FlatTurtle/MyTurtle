@@ -3,6 +3,7 @@
  * The Screen object will delegate from the DISS configuration array to other object
  *
  * @author: Jens Segers (jens@irail.be)
+ * @author: Michiel Vancoillie (michiel@irail.be)
  * @license: AGPLv3
  */
 
@@ -13,6 +14,9 @@ window.Screen = (function() {
 
 	// Screen location
 	var location = {};
+
+	// Screen location listeners
+	var location_listeners = {};
 
 	/*
 	 * Initialize the UI with a DISS configuration array
@@ -85,13 +89,33 @@ window.Screen = (function() {
 		});
 	}
 
+	/**
+	 * Update screen settings
+	 */
+	function update(options){
+		this.location =  {
+				address : options.location,
+				latitude : options.latitude,
+				longitude : options.longitude,
+				geocode : options.latitude + "," + options.longitude
+		};
+
+		// Notify all listening turtles
+		for(var turtle_id in this.listeners){
+			Turtles.options(turtle_id, {location:''});
+		}
+	}
+
+
 	/*
 	 * Public interface to this object
 	 */
 	return {
 		config : config,
 		load : load,
-		location : location
+		update : update,
+		location : location,
+		listeners : location_listeners
 	}
 
 }());

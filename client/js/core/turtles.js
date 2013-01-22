@@ -77,6 +77,7 @@ window.Turtles = (function() {
 		instance.type = type;
 		instance.id = id;
 		instance.el = options.el;
+		options.id = id;
 
 		// assign model
 		instance.model = turtle.model || Backbone.Model.extend();
@@ -198,11 +199,11 @@ window.Turtles = (function() {
 		var turtle = instances[id];
 
 		// update collection options
-		if (turtle.collection.options != null)
+		if (typeof turtle.collection != 'undefined')
 			turtle.collection.options = _.extend(turtle.collection.options, options);
 
 		// update view options
-		if (turtle.view.options != null)
+		if (typeof turtle.view != 'undefined')
 			turtle.view.options = _.extend(turtle.view.options, options);
 
 		// trigger reconfigure event

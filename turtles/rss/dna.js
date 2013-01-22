@@ -1,4 +1,4 @@
-/* 
+/*
  * FlatTurtle
  * @author: Jens Segers (jens@irail.be)
  * @license: AGPLv3
@@ -14,6 +14,7 @@
             // fetch data when born
             this.on("born", this.fetch);
             this.on("refresh", this.refresh);
+            this.on("reconfigure", this.refresh);
 
             // default error value
             options.error = false;
