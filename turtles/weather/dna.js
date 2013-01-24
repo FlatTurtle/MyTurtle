@@ -4,6 +4,7 @@
 		initialize : function(models, options) {
 			// prevents loss of 'this' inside methods
 			_.bindAll(this, "refresh");
+			_.bindAll(this, "url");
 
 			// bind refresh
 			this.on("born", this.refresh);
@@ -35,8 +36,9 @@
 			});
 		},
 		url : function() {
+			var self = this;
 			// pick screen location when location is not set
-			if(self.options.location == null || self.options.location == ""){
+			if(typeof self.options == "undefined" || self.options.location == null || self.options.location == ""){
 				self.options.location = Screen.location.geocode;
 				Screen.listeners[self.options.id] = true;
 			}else{
