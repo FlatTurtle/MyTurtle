@@ -19,11 +19,15 @@
 			refreshInterval = window.setInterval(this.refresh, 300000);
 		},
 		refresh : function() {
-			// don't fetch if there is no location
-			if (this.options.location == null || !this.options.location)
-				return;
-
 			var self = this;
+			// pick screen location when location is not set
+			if(typeof self.options == "undefined" || self.options.location == null || self.options.location == ""){
+				self.options.location = Screen.location.geocode;
+				Screen.listeners[self.options.id] = true;
+			}else{
+				delete Screen.listeners[self.options.id];
+			}
+
 			self.fetch({
 				error : function() {
 					// will allow the view to detect errors
@@ -37,17 +41,8 @@
 		},
 		url : function() {
 			var self = this;
-			// pick screen location when location is not set
-			if(typeof self.options == "undefined" || self.options.location == null || self.options.location == ""){
-				self.options.location = Screen.location.geocode;
-				Screen.listeners[self.options.id] = true;
-			}else{
-				delete Screen.listeners[self.options.id];
-			}
-
-			var latitude = this.options.location.split(',')[0];
-			var longitude = this.options.location.split(',')[1];
-
+			var latitude = self.options.location.split(',')[0];
+			var longitude = self.options.location.split(',')[1];
 			return "https://data.flatturtle.com/Weather/Rainfall/" + encodeURIComponent(latitude) + "/" + encodeURIComponent(longitude) + ".json";
 		},
 		parse : function(json) {

@@ -12,7 +12,7 @@
             _.bindAll(this, "refresh");
 
             // fetch data when born
-            this.on("born", this.fetch);
+            this.on("born", this.refresh);
             this.on("refresh", this.refresh);
             this.on("reconfigure", this.refresh);
 
