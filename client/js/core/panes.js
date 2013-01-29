@@ -50,12 +50,12 @@ window.Panes = (function() {
 			}
 
 			// append header
-			var tab = $('<div class="nav" data-pane="' + id + '"><div class="progress"></div><span class="title">' + pane.title + '<span></div>')
-			header.append(tab);
+			pane.tab = $('<div class="nav" data-pane="' + id + '"><div class="progress"></div><span class="title">' + pane.title + '<span></div>');
+			header.append(pane.tab);
 
 			// check if first pane and mark as active if so
 			if (header.find(".nav.active").length == 0) {
-				tab.addClass("active bg-color");
+				pane.tab.addClass("active bg-color");
 			}
 		}
 
@@ -88,10 +88,32 @@ window.Panes = (function() {
 	 * Remove a pane
 	 */
 	function remove(id) {
+		if (panes[id] == null)
+			return Debug.log("Unknown pane instance: " + id);
+
 		var pane = panes[id];
 
+		// stop previous timeout if it is still running
+		clearTimeout(timers[pane.type]);
+
+		// remove tab
+		if (pane.type == "widget") {
+			pane.tab.remove();
+		}
 		// remove element
 		pane.el.remove();
+
+		delete panes[id];
+
+		// kill all the turtles inside
+		Turtles.killByPane(id);
+
+		// rotate to next pane
+		this.rotate(pane.type);
+		// create next timer
+		timers[pane.type] = setTimeout(function() {
+			rotate(pane.type);
+		}, pane.duration);
 	}
 
 	/*

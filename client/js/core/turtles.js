@@ -68,7 +68,7 @@ window.Turtles = (function() {
 	/*
 	 * Create a new turtle (backbone) instance
 	 */
-	function instantiate(type, id, options) {
+	function instantiate(type, id, pane, options) {
 		// get turtle specification
 		var turtle = turtles[type];
 
@@ -76,8 +76,10 @@ window.Turtles = (function() {
 		var instance = {};
 		instance.type = type;
 		instance.id = id;
+		instance.pane = pane;
 		instance.el = options.el;
 		options.id = id;
+
 
 		// assign model
 		instance.model = turtle.model || Backbone.Model.extend();
@@ -162,7 +164,7 @@ window.Turtles = (function() {
 		Panes.append(pane, placeholder);
 
 		// create a baby turtle
-		var instance = instantiate(type, id, options);
+		var instance = instantiate(type, id, pane, options);
 
 		// check if pane is active and trigger event
 		if (Panes.isActive(pane)) {
@@ -226,12 +228,24 @@ window.Turtles = (function() {
 		turtle.el.remove();
 
 		// delete backbone objects
-		delete instance.collection;
-		delete instance.view;
-		delete instance.model;
+		delete turtle.collection;
+		delete turtle.view;
+		delete turtle.model;
 
 		// delete instance
 		delete instances[id];
+	}
+
+	/*
+	 * Kill all turtles in a specific pane
+	 */
+	function killByPane(pane_id) {
+		for(t in instances){
+			turtle = instances[t];
+			if(turtle.pane == pane_id){
+				this.kill(t);
+			}
+		}
 	}
 
 	/*
@@ -243,6 +257,7 @@ window.Turtles = (function() {
 		trigger : trigger,
 		grow : grow,
 		kill : kill,
+		killByPane : killByPane,
 		options : options,
 		order : order
 	};
