@@ -10,7 +10,7 @@
     var collection = Backbone.Collection.extend({
         initialize : function(models, options) {
             // prevents loss of 'this' inside methods
-            _.bindAll(this, "refresh", "configure", "getConnections");
+            _.bindAll(this, "refresh", "configure", "matchConnections");
 
             // bind events
             this.on("born", this.configure);
@@ -21,9 +21,11 @@
             // default error value
             options.error = false;
 
+            // keep hash of results
+            this.liveboardhash = null;
+
             // array for holding open request and objects
-            this.openRequests = [];
-            this.openRequestsObjects = [];
+            this.connectionsRequest = null;
             this.liveboard = [];
 
             // default limit
@@ -35,23 +37,21 @@
             refreshInterval = window.setInterval(this.refresh, 60000);
         },
         configure : function() {
-            // Walking time
-            var hours = Math.floor(this.options.time_walk/60);
-            var minutes = Math.floor(this.options.time_walk%60);
-            if(hours == 0 && minutes == 0){
-                this.options.time_walk = "< 1 min";
-            }else if(this.options.time_walk < 0){
-                this.options.time_walk = false;
-            }else{
-                if(hours< 10) hours = '0' + hours;
-                if(minutes< 10) minutes = '0' + minutes;
-                this.options.time_walk = hours + ':' + minutes;
-            }
+            // walking time
+            this.options.time_walk = formatTime(this.options.time_walk);
             this.trigger("reset");
 
             // don't fetch if there is no location
             if (this.options.location == null || !this.options.location)
                 return;
+
+            // parse via points
+            if(this.options.destination != null){
+                this.options.destination = this.options.destination.split(',');
+                for(var d in this.options.destination){
+                    this.options.destination[d] = this.options.destination[d].toLowerCase().trim();
+                }
+            }
 
             var today = new Date();
             var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
@@ -65,7 +65,7 @@
             });
         },
         refresh : function() {
-        	// don't fetch if there is no location
+            // don't fetch if there is no location
             if (this.options.location == null || !this.options.location)
                 return;
 
@@ -86,86 +86,124 @@
             var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
             return "http://data.irail.be/spectql/NMBS/Liveboard/" + query + "/departures.limit(" + parseInt(this.options.limit) + "):json";
-        },
+        }
+        ,
         parse : function(json) {
             var self = this;
 
-            // parse ajax results
-            this.liveboard = null;
-            this.liveboard = json.spectql;
+            // only parse when the results are new
+            var newhash = JSON.stringify(json.spectql).hashCode();
+            if(newhash != this.liveboardhash){
+                this.liveboardhash = newhash;
 
-            // abort previous requests
-            for (var i in this.openRequests){
-                this.openRequests[i].abort();
-                this.openRequests[i] = null;
-            }
-            this.openRequests = [];
-            this.openRequestsObjects = [];
+                // parse ajax results
+                this.liveboard = null;
+                this.liveboard = json.spectql;
 
-            // loop throught train results
-            for (var i in this.liveboard) {
-                var vehicle = encodeURIComponent(this.liveboard[i].vehicle);
-                if(this.options.destination){
-                    // Start new AJAX request for a waypoint
-                    (function (i) {
-                        var xhr = {
-                            url: "http://api.irail.be/vehicle/?id="+vehicle + "&format=json",
-                            async: true,
-                            success: function(data){
-                                self.getConnections(data, i);
-                            }
+                // abort previous request
+                if(this.connectionsRequest)
+                    this.connectionsRequest.abort();
+                this.connectionsRequest = null;
+
+                var vehicle = {};
+
+                // loop throught train results
+                for (var i in this.liveboard) {
+
+                    // append vehicle to list
+                    if(this.liveboard[i].vehicle){
+                        var current_vehicle = encodeURIComponent(this.liveboard[i].vehicle);
+                        if(current_vehicle.length > 0){
+                            vehicle[current_vehicle] = true;
                         }
-                        self.openRequestsObjects.push(xhr);
-                    })(i);
-                }
-
-                if(this.liveboard[i].time){
-                    var time = new Date(this.liveboard[i].time * 1000);
-                    this.liveboard[i].time = time.format("{H}:{M}");
-
-                    if (this.liveboard[i].delay) {
-                        var delay = new Date(this.liveboard[i].delay * 1000 + time.getTimezoneOffset() * 60000);
-                        this.liveboard[i].delay = delay.format("{H}:{M}");
                     }
+
+                    if(this.liveboard[i].time){
+                        var time = new Date(this.liveboard[i].time * 1000);
+                        this.liveboard[i].time = time.format("{H}:{M}");
+
+                        if (this.liveboard[i].delay) {
+                            var delay = new Date(this.liveboard[i].delay * 1000 + time.getTimezoneOffset() * 60000);
+                            this.liveboard[i].delay = delay.format("{H}:{M}");
+                        }
+                    }
+
+                    if (this.liveboard[i].direction){
+                        this.liveboard[i].direction = this.liveboard[i].direction.capitalize();
+                    }
+
+                    if (!this.liveboard[i].platform.name)
+                        this.liveboard[i].platform.name = "-";
+
+                    this.liveboard[i].type = this.liveboard[i].vehicle.match(/\.([a-zA-Z]+)[0-9]+$/)[1];
+                    if (!this.liveboard[i].type)
+                        this.liveboard[i].type = "-";
                 }
 
-                if (this.liveboard[i].direction){
-                    this.liveboard[i].direction = this.liveboard[i].direction.capitalize();
+
+                // If there is a via configured, fetch vehicle results
+                if(this.options.destination && $.isArray(this.options.destination)){
+                    // build vehicle string from "set"
+                    var vehicle_ids = "";
+                    var first_vehicle = true;
+                    for(var v in vehicle){
+                        if(!first_vehicle){
+                            vehicle_ids += ",";
+                        }
+                        vehicle_ids += v;
+                        first_vehicle = false;
+                    }
+
+                    this.connectionsRequest = $.ajax({
+                        url: "https://data.flatturtle.com/NMBS/Vehicles/"+ vehicle_ids + ".json",
+                        async: true,
+                        success: function(data){
+                            self.matchConnections(data);
+                        }
+                    });
                 }
 
-                if (!this.liveboard[i].platform.name)
-                    this.liveboard[i].platform.name = "-";
-
-                this.liveboard[i].type = this.liveboard[i].vehicle.match(/\.([a-zA-Z]+)[0-9]+$/)[1];
-                if (!this.liveboard[i].type)
-                    this.liveboard[i].type = "-";
+                self.trigger("reset");
             }
-
-            for (var i in this.openRequestsObjects){
-                var xhr = $.ajax(this.openRequestsObjects[i]);
-                this.openRequests.push(xhr);
-            }
-
-            self.trigger("reset");
 
             return this.liveboard;
         },
-        getConnections : function(data, i){
+        matchConnections : function(data){
             var self = this;
-            if(data.stops && data.stops.stop && data.stops.stop.length > 2){
-                var stoparray = data.stops.stop;
+            data = JSON.parse(data);
+            data = data.Vehicles;
 
-                var pastStart = false;
-                for(var j=0; j<stoparray.length-1 ; j++){
-                    if(!pastStart && stoparray[j].station.toLowerCase() == self.options.location.toLowerCase()){
-                        pastStart = true;
-                    }else if(pastStart && stoparray[j].station.toLowerCase() == self.options.destination.toLowerCase()){
-                        var viaTime = new Date(stoparray[j].time * 1000);
-                        stoparray[j].time = viaTime.format("{H}:{M}");
-                        self.liveboard[i].via = stoparray[j];
-                        self.trigger("reset");
+            // match results from vehicles stops with via's
+            for (var i in this.liveboard) {
+                if(this.liveboard[i].vehicle){
+                    var current_vehicle = this.liveboard[i].vehicle;
 
-                        break;
+                    // check if data contains the right information
+                    if(data[current_vehicle] &&
+                       data[current_vehicle].stops &&
+                       data[current_vehicle].stops.stop &&
+                       data[current_vehicle].stops.stop.length > 2){
+
+                        var stoparray = data[current_vehicle].stops.stop;
+
+                        // ignore the first value (start station)
+                        var pastStart = false;
+                        // loop through all but the last one (end station)
+                        for(var j=0; j<stoparray.length-1 ; j++){
+                            // only start counting when start station is passed in the route
+                            if(!pastStart && stoparray[j].station.toLowerCase() == self.options.location.toLowerCase()){
+                                pastStart = true;
+                            }else if(pastStart && ($.inArray(stoparray[j].station.toLowerCase(), self.options.destination) >= 0)){
+                                // found a match, now lets render it
+                                if(!self.liveboard[i].via)
+                                    self.liveboard[i].via = [];
+
+                                var viaTime = new Date(stoparray[j].time * 1000);
+                                stoparray[j].time = viaTime.format("{H}:{M}");
+                                self.liveboard[i].via.push(stoparray[j]);
+                                self.trigger("reset");
+                            }
+                        }
                     }
                 }
             }

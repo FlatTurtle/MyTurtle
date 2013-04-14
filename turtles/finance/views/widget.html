@@ -4,23 +4,23 @@
             <h2>Our shares</h2>
             <div class='more'>
                 <ul>
-                    <li>Open &mdash; {{Open}}</li>
-                    <li>High &mdash; {{DaysHigh}}</li>
-                    <li>Low &mdash; {{DaysLow}}</li>
-                    <li>Previous close &mdash; {{PreviousClose}}</li>
-                    <li>Volume &mdash; {{Volume}}</li>
+                    <li>Open &mdash; {{open}}</li>
+                    <li>High &mdash; {{high}}</li>
+                    <li>Low &mdash; {{low}}</li>
+                    <li>Previous close &mdash; {{previous_close}}</li>
+                    <li>Volume &mdash; {{volume}}</li>
                 </ul>
             </div>
             <div>
                 <div class='numbers'>
                     <div class="ask">
-                        {{Ask}}
-                        <span class='{{Color}}'>{{{Arrow}}}  {{ChangeRealtime}} ({{ChangeinPercent}})</span>
+                        {{value}}
+                        <span class='{{color}}'>{{{arrow}}}  {{change}} ({{change_percent}})</span>
                     </div>
                 </div>
                 <div class='name'>
-                    <h2>{{Symbol}}</h2>
-                    <h3>{{Name}}</h3>
+                    <h2>{{symbol}}</h2>
+                    <h3>{{name}}</h3>
                 </div>
             </div>
         </div>
@@ -31,12 +31,12 @@
     {{#secondary}}
         <div class="shares bg-color-light color2">
             <div>
-                <h2>{{Symbol}}</h2>
+                <h2>{{symbol}}</h2>
             </div>
-            <p class="main_number">{{Ask}}<br/></p>
+            <p class="main_number">{{value}}<br/></p>
             <div class='dark-bg bg-color-dark'>
-                <span class='{{Color}}'>{{{Arrow}}}  {{ChangeRealtime}} ({{ChangeinPercent}})</span>
-                <h3>{{Name}}</h3>
+                <span class='{{color}}'>{{{arrow}}}  {{change}} ({{change_percent}})</span>
+                <h3>{{name}}</h3>
             </div>
         </div>
     {{/secondary}}

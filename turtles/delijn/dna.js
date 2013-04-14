@@ -33,17 +33,7 @@
         configure : function() {
             log.debug("TURTLE - DELIJN - Configure");
             // Walking time
-            var hours = Math.floor(this.options.time_walk/60);
-            var minutes = Math.floor(this.options.time_walk%60);
-            if(hours == 0 && minutes == 0){
-                this.options.time_walk = "< 1 min";
-            }else if(this.options.time_walk < 0){
-                this.options.time_walk = false;
-            }else{
-                if(hours< 10) hours = '0' + hours;
-                if(minutes< 10) minutes = '0' + minutes;
-                this.options.time_walk = hours + ':' + minutes;
-            }
+            this.options.time_walk = formatTime(this.options.time_walk);
             this.trigger("reset");
 
             // don't fetch if there is no location

@@ -819,12 +819,12 @@ ul li {
     position: absolute;
     font-family: "Soho Gothic W01 Bold";
     right: 0px;
-    top: 0px;
+    top:0px;
     text-align: right;
     vertical-align: middle;
     padding-left: 2%;
     padding-right: 2%;
-    margin-top: 2%;
+    padding-top:2%;
     font-size: 1.8em;
     line-height: 1.1em;
     height: 98%;
@@ -971,8 +971,8 @@ ul li {
 }
 
 .rss {
-    width: 94%;
-    padding: 16px 3% 3% 3%;
+    width: 96%;
+    padding: 20px 2% 40px 2%;
     min-height: 80px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
     margin-bottom: 30px;
@@ -993,19 +993,26 @@ ul li {
     margin: 26px 10px 10px 0;
 }
 
+.rss .text{
+    margin-top: 15px;
+    line-height: 1.5em;
+}
+
+.rss .source{
+    font-size: 12px;
+    text-align: right;
+    float:right;
+    margin: 0px;
+    padding-top: 4px;
+    text-shadow: none;
+}
+
 .rss .img img {
     max-width: 100%;
     height: auto !important;
 }
 
-.rss .text p,.rss .text+p {
-    text-shadow: none;
-    margin-top: 20px;
-    line-height: 1.5em;
-}
-
 .rss h2 {
-    margin-top: 20px;
     line-height: 1.1em;
 }
 

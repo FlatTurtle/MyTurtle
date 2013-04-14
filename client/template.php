@@ -1,4 +1,10 @@
-<?php $rand = rand(); ?>
+<?php
+    // Disable all the caching with a random variable
+    $rand = rand();
+
+    // Load some config variables
+    $config = @parse_ini_file("config.ini");
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,9 +48,17 @@
         ?>
         <script src="client/js/libs/log4javascript.js?<?php echo $rand; ?>"></script>
         <script>
+            // Overwrite alerts
+            window.alert = function(text) {
+                console.log( 'Tried to alert: ' + text );
+                return true;
+            };
+
             // Setup the logger
             var log = log4javascript.getLogger("MyTurtle");
             log.setLevel(log4javascript.Level.WARN);
+            // Turn off nasty alerts
+            log4javascript.logLog.setQuietMode(true);
 
             // Log pattern
             var logPattern = new log4javascript.PatternLayout("%d{HH:mm:ss SSS} - %-6p > %m{10}");
@@ -68,6 +82,13 @@
                 log.fatal("HOUSTON, WE HAVE A PROBLEM: " + message + " (line "+ lineNumber + ")");
                 return true;
             };
+
+            // Add config array
+            <?php
+                if(!empty($config)){
+                    echo "var config = ". json_encode($config);
+                }
+            ?>
 
             log.info("Start loading libraries");
         </script>

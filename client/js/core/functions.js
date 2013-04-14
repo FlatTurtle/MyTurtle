@@ -133,3 +133,38 @@ Date.prototype.addMinutes= function(m){
     this.setMinutes(this.getMinutes()+m);
     return this;
 }
+
+/*
+ * Format time in hours:minutes
+ */
+function formatTime(time){
+    var hours = Math.floor(time/60);
+    var minutes = Math.floor(time%60);
+    if(hours == 0 && minutes == 0){
+        time = "< 1 min";
+    }if(hours == 0 && minutes > 0){
+        time = minutes + " min";
+    }else if(time < 0){
+        time = false;
+    }else{
+        if(hours< 10) hours = '0' + hours;
+        if(minutes< 10) minutes = '0' + minutes;
+        time = hours + 'h' + minutes;
+    }
+
+    return time;
+}
+
+/*
+ * Hash a string
+ */
+ String.prototype.hashCode = function(){
+     var hash = 0, i, char;
+     if (this.length == 0) return hash;
+     for (i = 0; i < this.length; i++) {
+         char = this.charCodeAt(i);
+         hash = ((hash<<5)-hash)+char;
+         hash = hash & hash; // Convert to 32bit integer
+     }
+     return hash;
+ };

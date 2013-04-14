@@ -59,28 +59,28 @@
             var entries = new Object();
 
             try{
-            this.options.source = json.title;
-            var items = json.items.slice(0, this.options.limit - 1);
+                this.options.source = json.title;
+                var items = json.items.slice(0, this.options.limit - 1);
 
-            for (var i in items) {
-                var time = new Date(items[i].published * 1000);
-                items[i].time = time.format("{H}:{M}");
+                for (var i in items) {
+                    var time = new Date(items[i].published * 1000);
+                    items[i].time = time.format("{H}:{M}");
 
-                // Determine type
-                if(items[i].enclosure && items[i].enclosure.href != null && !items[i].summary){
-                    entries.type_images = true;
-                    if(!entries.rss_images)
-                        entries.rss_images = new Array();
-                    entries.rss_images.push(items[i]);
-                }else{
-                    if(!entries.rss_feeds)
-                        entries.rss_feeds = new Array();
-                    entries.rss_feeds.push(items[i]);
+                    // Determine type
+                    if(items[i].enclosure && items[i].enclosure.href != null && !items[i].summary){
+                        entries.type_images = true;
+                        if(!entries.rss_images)
+                            entries.rss_images = new Array();
+                        entries.rss_images.push(items[i]);
+                    }else{
+                        if(!entries.rss_feeds)
+                            entries.rss_feeds = new Array();
+                        entries.rss_feeds.push(items[i]);
+                    }
                 }
+            }catch(e){
+                log.warn("TURTLE - RSS - Can't parse results");
             }
-        }catch(e){
-            console.log("éjkjljlk");
-        }
 
             // return only limited number if items
             return entries;

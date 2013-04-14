@@ -1,6 +1,7 @@
 index.php
 client/logs/*
 !client/logs/logger.php
+config.ini
 
 
 ######################
