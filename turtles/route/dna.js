@@ -111,7 +111,6 @@
         },
         parse : function(json) {
             var today = new Date();
-            var timezoneOffset = today.getTimezoneOffset() * 60000;
             var delay;
 
             if(this.options.route_type == "nmbs"){
@@ -125,8 +124,7 @@
                         connection.departure.time = time.format("{H}:{M}");
                         connection.departure.type = connection.departure.vehicle.match(/\.([a-zA-Z]+)[0-9]+$/)[1];
                         if(connection.departure.delay && connection.departure.delay != 0){
-                            var delay = new Date(connection.departure.delay * 1000 + timezoneOffset);
-                            connection.departure.delay = delay.format("{H}:{M}");
+                            connection.departure.delay = formatTime(connection.departure.delay/60);
                         }else{
                             connection.departure.delay = false;
                         }
@@ -134,8 +132,7 @@
                         connection.arrival.time = time.format("{H}:{M}");
                         connection.arrival.type = connection.arrival.vehicle.match(/\.([a-zA-Z]+)[0-9]+$/)[1];
                         if(connection.arrival.delay && connection.arrival.delay != 0){
-                            var delay = new Date(connection.arrival.delay * 1000 + timezoneOffset);
-                            connection.arrival.delay = delay.format("{H}:{M}");
+                            connection.arrival.delay = formatTime(connection.arrival.delay/60);
                         }else{
                             connection.arrival.delay = false;
                         }
@@ -147,8 +144,7 @@
                                 time = new Date(parseInt(via.arrival.time) * 1000);
                                 via.arrival.time = time.format("{H}:{M}");
                                 if(via.departure.delay && via.departure.delay != 0){
-                                    var delay = new Date(via.departure.delay * 1000 + timezoneOffset);
-                                    via.departure.delay = delay.format("{H}:{M}");
+                                    via.departure.delay = formatTime(via.departure.delay/60);
                                 }else{
                                     via.departure.delay = false;
                                 }
@@ -178,8 +174,7 @@
                         data.results[i].time = time.format("{H}:{M}");
 
                         if (data.results[i].delay) {
-                            var delay = new Date(data.results[i].delay * 1000 + timezoneOffset);
-                            data.results[i].delay = delay.format("{H}:{M}");
+                            data.results[i].delay = formatTime(data.results[i].delay/60);
                         }
 
                         if (!data.results[i].platform.name)
@@ -213,8 +208,7 @@
                     data.results[i].time = time.format("{H}:{M}");
 
                     if (data.results[i].delay) {
-                        var delay = new Date(data.results[i].delay * 1000 + time.getTimezoneOffset() * 60000);
-                        data.results[i].delay = delay.format("{H}:{M}");
+                        data.results[i].delay = formatTime(data.results[i].delay/60);
                     }
 
                     if (!data.results[i].long_name) {

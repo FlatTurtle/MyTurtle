@@ -141,9 +141,9 @@ function formatTime(time){
     var hours = Math.floor(time/60);
     var minutes = Math.floor(time%60);
     if(hours == 0 && minutes == 0){
-        time = "< 1 min";
+        time = "< 1m";
     }if(hours == 0 && minutes > 0){
-        time = minutes + " min";
+        time = minutes + "m";
     }else if(time < 0){
         time = false;
     }else{
@@ -168,3 +168,12 @@ function formatTime(time){
      }
      return hash;
  };
+
+ /*
+  * Fix timezone bug (daylight savings)
+  */
+ Date.prototype.stdTimezoneOffset = function() {
+     var jan = new Date(this.getFullYear(), 0, 1);
+     var jul = new Date(this.getFullYear(), 6, 1);
+     return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+ }

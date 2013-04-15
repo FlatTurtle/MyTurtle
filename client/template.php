@@ -101,7 +101,6 @@
         <script src="client/js/libs/mustache.js?<?php echo $rand; ?>"></script>
         <script src="client/js/libs/tinycolor.js?<?php echo $rand; ?>"></script>
         <script src="client/js/libs/later.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/libs/duration.js?<?php echo $rand; ?>"></script>
 
         <script type="text/javascript">
             log.info("Done loading libraries");

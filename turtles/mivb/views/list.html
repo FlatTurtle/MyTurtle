@@ -1,6 +1,6 @@
 <div class="header">
-	<i class="bus"></i>
-	<h2>{{station}}</h2>
+    <i class="bus"></i>
+    <h2>{{station}}</h2>
     <h4>STIB</h4>
     {{#time_walk}}
         <div class="distance">
@@ -11,29 +11,34 @@
     {{/time_walk}}
 </div>
 <div class="results">
-	<ul>
-		{{#entries}}
-		<li>
-			<div>
-				<div class="square" style="background-color: #{{color}};">
-					<p>{{short_name}}</p>
-				</div>
-				{{#delay}}
-					<h3 class="red">{{long_name}}</h3>
-				{{/delay}}
-				{{^delay}}
-					<h3>{{long_name}}</h3>
-				{{/delay}}
-			</div>
-			<div class="time">
-				{{#delay}}
-					<p class="red">Canceled</p>
-				{{/delay}}
-				{{^delay}}
-					<p>{{time}}</p>
-				{{/delay}}
-			</div>
-		</li>
-		{{/entries}}
-	</ul>
+    <ul>
+        {{#entries}}
+        <li>
+            <div>
+                <div class="square" style="background-color: #{{color}};">
+                    <p>{{short_name}}</p>
+                </div>
+                {{#delay}}
+                    <h3 class="red">{{long_name}}</h3>
+                {{/delay}}
+                {{^delay}}
+                    <h3>{{long_name}}</h3>
+                {{/delay}}
+            </div>
+            <div class="time">
+                {{#delay}}
+                    <p class="red">Canceled</p>
+                {{/delay}}
+                {{^delay}}
+                    <p>{{time}}</p>
+                {{/delay}}
+            </div>
+        </li>
+        {{/entries}}
+        {{#error}}
+        <li class='error'>
+            <span class='message'>No connections</span>
+        </li>
+        {{/error}}
+    </ul>
 </div>

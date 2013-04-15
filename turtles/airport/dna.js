@@ -91,17 +91,21 @@
             log.info("TURTLE - AIRPORT - Parse results");
             // parse ajax results
             var liveboard = json.spectql;
+            this.options.error = false;
 
-            for (var i in liveboard) {
-                if(liveboard[i].time){
-                    var time = new Date(liveboard[i].time * 1000);
-                    liveboard[i].time = time.format("{H}:{M}");
+            if(liveboard.length > 0){
+                for (var i in liveboard) {
+                    if(liveboard[i].time){
+                        var time = new Date(liveboard[i].time * 1000);
+                        liveboard[i].time = time.format("{H}:{M}");
 
-                    if (liveboard[i].delay) {
-                        var delay = new Date(liveboard[i].delay * 1000 + time.getTimezoneOffset() * 60000);
-                        liveboard[i].delay = delay.format("{H}:{M}");
+                        if (liveboard[i].delay) {
+                            liveboard[i].delay = formatTime(liveboard[i].delay/60);
+                        }
                     }
                 }
+            }else{
+                this.options.error = true;
             }
 
             return liveboard;

@@ -82,39 +82,43 @@
             // this.options.station = json.Departures.location.name;
             // parse ajax results
             var liveboard = json.Departures;
+            this.options.error = false;
 
-            for (var i in liveboard) {
-                if(liveboard[i].time){
-                    var time = new Date(liveboard[i].time * 1000);
-                    liveboard[i].time = time.format("{H}:{M}");
+            if(liveboard.length > 0){
+                for (var i in liveboard) {
+                    if(liveboard[i].time){
+                        var time = new Date(liveboard[i].time * 1000);
+                        liveboard[i].time = time.format("{H}:{M}");
 
-                    if (liveboard[i].delay) {
-                        var delay = new Date(liveboard[i].delay * 1000 + time.getTimezoneOffset() * 60000);
-                        liveboard[i].delay = delay.format("{H}:{M}");
+                        if (liveboard[i].delay) {
+                            liveboard[i].delay = formatTime(liveboard[i].delay/60);
+                        }
+                    }
+
+                    if (!liveboard[i].long_name) {
+                        liveboard[i].long_name = "-";
+                    } else {
+                        liveboard[i].long_name = liveboard[i].long_name.capitalize();
+
+                        if (liveboard[i].long_name.split("-").length == 2)
+                            liveboard[i].long_name = liveboard[i].long_name.split("-")[1];
+                    }
+
+                    if(liveboard[i].type){
+                        switch (parseInt(liveboard[i].type)) {
+                            case 0:
+                                liveboard[i].type = "tram";
+                                break;
+                            default:
+                                liveboard[i].type = "bus";
+                                break;
+                        }
+                    }else{
+                        liveboard[i].type = "bus";
                     }
                 }
-
-                if (!liveboard[i].long_name) {
-                    liveboard[i].long_name = "-";
-                } else {
-                    liveboard[i].long_name = liveboard[i].long_name.capitalize();
-
-                    if (liveboard[i].long_name.split("-").length == 2)
-                        liveboard[i].long_name = liveboard[i].long_name.split("-")[1];
-                }
-
-                if(liveboard[i].type){
-                    switch (parseInt(liveboard[i].type)) {
-                        case 0:
-                            liveboard[i].type = "tram";
-                            break;
-                        default:
-                            liveboard[i].type = "bus";
-                            break;
-                    }
-                }else{
-                    liveboard[i].type = "bus";
-                }
+            }else{
+                this.options.error = true;
             }
 
             return liveboard;

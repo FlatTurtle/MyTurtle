@@ -251,7 +251,8 @@ ul li {
     float: left;
     margin-left: 20px;
     font-size: 1em;
-    line-height: 85px;
+    line-height: 78px;
+    padding-top: 3px;
     color: #888;
 }
 
@@ -360,6 +361,16 @@ ul li {
 .results ul li>* {
     width: 80%;
     height: auto;
+}
+
+.results ul li.error{
+    margin: 0px;
+    padding: 0px;
+    border-left: 95px solid #fff;
+}
+
+.results ul li.error .message{
+    padding-left: 15px;
 }
 
 .results ul li h3 {
@@ -1107,6 +1118,11 @@ ul li {
 
 .floor ul li:last-child{
     margin-bottom: 5px;
+}
+
+.floor ul li:only-child{
+    line-height: 80px;
+    margin: 0px;
 }
 
 /* ==========================================================================
