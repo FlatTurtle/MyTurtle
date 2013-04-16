@@ -1,6 +1,5 @@
 /*
  * FlatTurtle
- * @author: Jens Segers (jens@irail.be)
  * @author: Michiel Vancoillie (michiel@irail.be)
  * @license: AGPLv3
  */
@@ -18,7 +17,6 @@
             if(!this.options.data)
                 return false;
 
-            this.options.data = JSON.parse(this.options.data);
             this.trigger("render");
         }
     });
@@ -35,7 +33,7 @@
         render : function() {
             var self = this;
 
-            $.get("turtles/signage/views/widget.html", function(template) {
+            $.get("turtles/info/views/widget.html", function(template) {
                 var data = {
                     data : self.options.data
                 };
@@ -48,7 +46,7 @@
     });
 
     // register turtle
-    Turtles.register("signage", {
+    Turtles.register("info", {
         collection : collection,
         view : view
     });

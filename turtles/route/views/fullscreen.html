@@ -13,123 +13,123 @@
 
 {{#connections}}
 <div class="header bg-color">
-	<h2>Planning your route</h2>
+    <h2>Planning your route</h2>
 </div>
 <div class="results">
-	<div class='connections half bg-color'>
-		{{#connection}}
-		<div class='connection'>
-			<ul>
-				{{#departure}}
-				<li>
-					<div>
-						<div class="square light">
-							<p>{{platform}}</p>
-						</div>
-						<div class="square {{type}}">
-							<p>{{type}}</p>
-						</div>
-						<h3>{{station}}</h3>
-					</div>
-					<div class="time">
-						{{#delay}}
-							<p class="red">{{time}}</p>
-							<p class="red">+{{delay}}</p>
-						{{/delay}}
-						{{^delay}}
-							<p>{{time}}</p>
-						{{/delay}}
-					</div>
-				</li>
-				{{/departure}}
-				{{#vias}}
-					{{#via}}
-						<li class='vias'>
-							<div class='line'></div>
-							{{#arrival}}
-								<h3><span>&rarr;</span> {{station}}</h3>
+    <div class='connections half bg-color'>
+        {{#connection}}
+        <div class='connection'>
+            <ul>
+                {{#departure}}
+                <li>
+                    <div>
+                        <div class="square light">
+                            <p>{{platform}}</p>
+                        </div>
+                        <div class="square {{type}}">
+                            <p>{{type}}</p>
+                        </div>
+                        <h3>{{station}}</h3>
+                    </div>
+                    <div class="time">
+                        {{#delay}}
+                            <p class="red">{{time}}</p>
+                            <p class="red">+{{delay}}</p>
+                        {{/delay}}
+                        {{^delay}}
+                            <p>{{time}}</p>
+                        {{/delay}}
+                    </div>
+                </li>
+                {{/departure}}
+                {{#vias}}
+                    {{#via}}
+                        <li class='vias'>
+                            <div class='line'></div>
+                            {{#arrival}}
+                                <h3><span>&rarr;</span> {{station}}</h3>
 
-								<div class="square light">
-									<p>{{platform}}</p>
-								</div>
-								<div class="time">
-									<p>{{time}}</p>
-								</div>
-							{{/arrival}}
-							{{#departure}}
-								<div class="square light second">
-									<p>{{platform}}</p>
-								</div>
-								<div class="time second">
-									{{#delay}}
-										<p class="red">{{time}}</p>
-										<p class="red">+{{delay}}</p>
-									{{/delay}}
-									{{^delay}}
-										<p>{{time}}</p>
-									{{/delay}}
-								</div>
-							{{/departure}}
-						</li>
-					{{/via}}
-				{{/vias}}
-				{{#arrival}}
-				<li>
-					<div>
-						<div class="square light">
-							<p>{{platform}}</p>
-						</div>
-						<div class="square {{type}}">
-							<p>{{type}}</p>
-						</div>
-						<h3>{{station}}</h3>
-					</div>
-					<div class="time">
-						{{#delay}}
-							<p class="red">{{time}}</p>
-							<p class="red">+{{delay}}</p>
-						{{/delay}}
-						{{^delay}}
-							<p>{{time}}</p>
-						{{/delay}}
-					</div>
-				</li>
-				{{/arrival}}
-			</ul>
-		</div>
-		{{/connection}}
-	</div>
+                                <div class="square light">
+                                    <p>{{platform}}</p>
+                                </div>
+                                <div class="time">
+                                    <p>{{time}}</p>
+                                </div>
+                            {{/arrival}}
+                            {{#departure}}
+                                <div class="square light second">
+                                    <p>{{platform}}</p>
+                                </div>
+                                <div class="time second">
+                                    {{#delay}}
+                                        <p class="red">{{time}}</p>
+                                        <p class="red">+{{delay}}</p>
+                                    {{/delay}}
+                                    {{^delay}}
+                                        <p>{{time}}</p>
+                                    {{/delay}}
+                                </div>
+                            {{/departure}}
+                        </li>
+                    {{/via}}
+                {{/vias}}
+                {{#arrival}}
+                <li>
+                    <div>
+                        <div class="square light">
+                            <p>{{platform}}</p>
+                        </div>
+                        <div class="square {{type}}">
+                            <p>{{type}}</p>
+                        </div>
+                        <h3>{{station}}</h3>
+                    </div>
+                    <div class="time">
+                        {{#delay}}
+                            <p class="red">{{time}}</p>
+                            <p class="red">+{{delay}}</p>
+                        {{/delay}}
+                        {{^delay}}
+                            <p>{{time}}</p>
+                        {{/delay}}
+                    </div>
+                </li>
+                {{/arrival}}
+            </ul>
+        </div>
+        {{/connection}}
+    </div>
 </div>
 {{/connections}}
 {{#liveboard}}
 <div class="header bg-color">
-	<h2>{{route_type}} {{type}}: {{#location}}{{name}}{{/location}}</h2>
+    <h2>{{route_type}} {{type}}: {{#location}}{{name}}{{/location}}</h2>
 </div>
 <div class="results half bg-color">
-	<ul>
+    <ul>
         {{#nmbs}}
-    		{{#results}}
-    		<li>
-    			<div>
-    				<div class="square light">
-    					<p>{{#platform}}{{name}}{{/platform}}</p>
-    				</div>
-    				<div class="square {{type}}">
-    					<p>{{type}}</p>
-    				</div>
-    				<h3>{{direction}}</h3>
-    			</div>
-    			<div class="time">
-    				{{#delay}}
-    					<p class="red">{{time}}</p>
-    					<p class="red">+{{delay}}</p>
-    				{{/delay}}
-    				{{^delay}}
-    					<p>{{time}}</p>
-    				{{/delay}}
-    			</div>
-    		</li>
-    		{{/results}}
+            {{#results}}
+            <li>
+                <div>
+                    <div class="square light">
+                        <p>{{#platform}}{{name}}{{/platform}}</p>
+                    </div>
+                    <div class="square {{type}}">
+                        <p>{{type}}</p>
+                    </div>
+                    <h3>{{direction}}</h3>
+                </div>
+                <div class="time">
+                    {{#delay}}
+                        <p class="red">{{time}}</p>
+                        <p class="red">+{{delay}}</p>
+                    {{/delay}}
+                    {{^delay}}
+                        <p>{{time}}</p>
+                    {{/delay}}
+                </div>
+            </li>
+            {{/results}}
         {{/nmbs}}
         {{#mivb}}
             {{#results}}
@@ -156,6 +156,6 @@
             </li>
             {{/results}}
         {{/mivb}}
-	<ul>
+    <ul>
 </div>
 {{/liveboard}}
