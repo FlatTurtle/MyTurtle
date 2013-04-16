@@ -1,56 +1,56 @@
 <?xml version="1.0"?>
 <project name="FlatTurtle Apache Ant build script" default="initialize">
 
-	<!--
-	*************************************************
-	* PROPERTIES *
-	*************************************************
-	-->
-	<property name="template_dir" value="templates/default" />
-	<property name="core_dir" value="core" />
-	
-	<property name="css_dir" value="${template_dir}/css" />
-	<property name="js_dir" value="${template_dir}/js" />
-	
-	<!--
-	*************************************************
-	* YUI COMPRESSOR *
-	*************************************************
-	-->
-	<target name="compress">
-		<java jar="tools/yuicompressor.jar" fork="true">
-			<arg value="${file}" />
-			<arg value="-o" />
-			<arg value="${file}" />
-		</java>
-		<echo>${file}</echo>
-	</target>
-	
-	<!--
-	*************************************************
-	* TEMPLATE STYLESHEET *
-	*************************************************
-	-->
-	<target name="concat_css">
-		<concat destfile="${css_dir}/style.min.css">
-			<filelist id="files" dir="${css_dir}">
-				<file name="style.css" />
-			</filelist>
-		</concat>
-	</target>
-	
-	<target name="compress_css" depends="concat_css">
+    <!--
+    *************************************************
+    * PROPERTIES *
+    *************************************************
+    -->
+    <property name="template_dir" value="templates/default" />
+    <property name="core_dir" value="core" />
+
+    <property name="css_dir" value="${template_dir}/css" />
+    <property name="js_dir" value="${template_dir}/js" />
+
+    <!--
+    *************************************************
+    * YUI COMPRESSOR *
+    *************************************************
+    -->
+    <target name="compress">
+        <java jar="tools/yuicompressor.jar" fork="true">
+            <arg value="${file}" />
+            <arg value="-o" />
+            <arg value="${file}" />
+        </java>
+        <echo>${file}</echo>
+    </target>
+
+    <!--
+    *************************************************
+    * TEMPLATE STYLESHEET *
+    *************************************************
+    -->
+    <target name="concat_css">
+        <concat destfile="${css_dir}/style.min.css">
+            <filelist id="files" dir="${css_dir}">
+                <file name="style.css" />
+            </filelist>
+        </concat>
+    </target>
+
+    <target name="compress_css" depends="concat_css">
         <antcall target="compress">
             <param name="file" value="${css_dir}/style.min.css" />
         </antcall>
     </target>
-	
-	<!--
-	*************************************************
-	* TEMPLATE JAVASCRIPT *
-	*************************************************
-	-->
-	<target name="concat_js">
+
+    <!--
+    *************************************************
+    * TEMPLATE JAVASCRIPT *
+    *************************************************
+    -->
+    <target name="concat_js">
         <concat destfile="${js_dir}/application.min.js">
             <filelist id="files" dir="${js_dir}">
                 <file name="libs/jquery.tmpl.js" />
@@ -58,34 +58,34 @@
             </filelist>
         </concat>
     </target>
-    
+
     <target name="concat_plugins">
         <concat destfile="${js_dir}/plugins.min.js">
             <fileset id="files" dir="${js_dir}/plugins" includes="*.js" />
         </concat>
     </target>
-	
-	<target name="compress_js" depends="concat_js">
+
+    <target name="compress_js" depends="concat_js">
         <antcall target="compress">
             <param name="file" value="${js_dir}/application.min.js" />
         </antcall>
     </target>
-    
+
     <target name="compress_plugins" depends="concat_plugins">
         <antcall target="compress">
             <param name="file" value="${js_dir}/plugins.min.js" />
         </antcall>
     </target>
-	
-	<!--
-	*************************************************
-	* CORE JAVASCRIPT *
-	*************************************************
-	-->
-	<target name="concat_core">
+
+    <!--
+    *************************************************
+    * CORE JAVASCRIPT *
+    *************************************************
+    -->
+    <target name="concat_core">
         <concat destfile="${core_dir}/core.min.js">
             <filelist id="files" dir="${core_dir}">
-                <file name="underscore.js" /> 
+                <file name="underscore.js" />
                 <file name="jquery.js" />
                 <file name="backbone.js" />
                 <file name="turtles.js" />
@@ -93,20 +93,20 @@
             </filelist>
         </concat>
     </target>
-	
-	<target name="compress_core" depends="concat_core">
+
+    <target name="compress_core" depends="concat_core">
         <antcall target="compress">
             <param name="file" value="${core_dir}/core.min.js" />
         </antcall>
     </target>
-	
-	<!--
-	*************************************************
-	* INITIALIZE *
-	*************************************************
-	-->
-	<target name="initialize">
-	   <antcall target="compress_core"  />
+
+    <!--
+    *************************************************
+    * INITIALIZE *
+    *************************************************
+    -->
+    <target name="initialize">
+       <antcall target="compress_core"  />
         <antcall target="compress_css" />
         <antcall target="compress_js"  />
         <antcall target="compress_plugins"  />

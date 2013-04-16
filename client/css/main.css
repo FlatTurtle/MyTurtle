@@ -912,20 +912,6 @@ ul li {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
 }
 
-.tweet .body:after {
-    content: "";
-    background-image: url(images/shadow_bottom.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: top center;
-    width: 100%;
-    opacity: 0.3;
-    height: 50px;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-}
-
 .tweet .author {
     width: 100%;
     height: 50px;
@@ -979,6 +965,41 @@ ul li {
 .villo .big {
     color: #888;
     font-size: 2.3em;
+}
+
+.turtle.info .info {
+    width: 96%;
+    padding: 20px 2% 20px 2%;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    line-height: 1.9em;
+}
+
+.turtle.info .info i{
+    display: inline;
+}
+
+.turtle.info .info h2{
+    margin: 25px 0px 20px 0px;
+}
+
+.turtle.info .info h3{
+    margin: 15px 0px 10px 0px;
+}
+
+.turtle.info .info ul {
+    list-style: disc !important;
+    list-style-type: disc !important;
+}
+
+.turtle.info .info ul li{
+    float: none !important;
+    list-style: disc !important;
+    list-style-type: disc !important;
+}
+
+.turtle.info .info ol, .turtle.info .info ul {
+    padding: 10px;
+    padding-left: 55px;
 }
 
 .rss {
@@ -1036,6 +1057,9 @@ ul li {
 
 .rss .imagewall p.source{
     padding-left: 10px;
+    padding-right: 3%;
+    /*clear: both;*/
+    float: none;
 }
 
 .rss .imagewall p{
