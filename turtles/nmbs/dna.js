@@ -91,6 +91,8 @@
         parse : function(json) {
             var self = this;
 
+            this.options.error = false;
+
             // only parse when the results are new
             var newhash = JSON.stringify(json.spectql).hashCode();
             if(newhash != this.liveboardhash){
@@ -100,8 +102,6 @@
                 this.liveboard = null;
                 this.liveboard = json.spectql;
 
-
-                this.options.error = false;
 
                 if(this.liveboard.length > 0){
                     // abort previous request

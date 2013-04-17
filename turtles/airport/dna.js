@@ -22,6 +22,11 @@
             // default error value
             options.error = false;
 
+            // set type (departures | arrivals)
+            if(!options.type || options.type != "arrivals"){
+                options.type = "departures";
+            }
+
             // default limit
             if (!options.limit)
                 options.limit = 5;
@@ -85,28 +90,49 @@
 
             // remote source url
             // todo: add departures or arrivals
-            return "http://data.irail.be/spectql/Airports/Liveboard/" + query + "/departures.limit(" + parseInt(this.options.limit) + "):json";
+            return "http://data.irail.be/Airports/Liveboard/" + query + ".json?direction="+ this.options.type;
         },
         parse : function(json) {
             log.info("TURTLE - AIRPORT - Parse results");
             // parse ajax results
-            var liveboard = json.spectql;
+            var liveboard = json.Liveboard[this.options.type];
             this.options.error = false;
 
+            liveboard = liveboard.slice(0, this.options.limit + 5);
+
+            var today = new Date();
+            today = today.getTime()/1000;
+
             if(liveboard.length > 0){
-                for (var i in liveboard) {
-                    if(liveboard[i].time){
+                var i = liveboard.length;
+                while(i--){
+                    if(liveboard[i].time && liveboard[i].time > today){
                         var time = new Date(liveboard[i].time * 1000);
                         liveboard[i].time = time.format("{H}:{M}");
 
                         if (liveboard[i].delay) {
-                            liveboard[i].delay = formatTime(liveboard[i].delay/60);
+                            var delay = parseInt(liveboard[i].delay);
+                            if(delay < 0){
+                                delay = Math.abs(delay);
+                                if(delay < 3600){
+                                    // this one is early, add to delay to display in view
+                                    liveboard[i].delay = new Object();
+                                    liveboard[i].delay.early = formatTime(delay/60);
+                                }else{
+                                    liveboard[i].delay = false;
+                                }
+                            }else{
+                                liveboard[i].delay = formatTime(delay/60);
+                            }
                         }
+                    }else{
+                        liveboard.splice(i, 1);
                     }
                 }
             }else{
                 this.options.error = true;
             }
+            liveboard = liveboard.slice(0, this.options.limit);
 
             return liveboard;
         }
@@ -137,6 +163,7 @@
             if (this.template) {
                 var data = {
                     airport : this.options.airport || this.options.location,
+                    type: this.options.type.toUpperCase(),
                     entries : this.collection.toJSON(),
                     error : this.options.error // have there been any errors?
                 };

@@ -26,6 +26,11 @@
             if (!options.limit)
                 options.limit = 5;
 
+            // set type (departures | arrivals)
+            if(!options.type || options.type != "arrivals"){
+                options.type = "departures";
+            }
+
             // automatic collection refresh each minute, this will
             // trigger the reset event
             refreshInterval = window.setInterval(this.refresh, 60000);
@@ -75,13 +80,13 @@
             var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
             // remote source url - todo: add departures or arrivals
-            return "http://data.irail.be/DeLijn/Departures/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);
+            return "http://data.irail.be/DeLijn/" + this.options.type.capitalize()  + "/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);
         },
         parse : function(json) {
             log.info("TURTLE - DELIJN - Parse results");
-            // this.options.station = json.Departures.location.name;
+
             // parse ajax results
-            var liveboard = json.Departures;
+            var liveboard = json[this.options.type.capitalize()];
             this.options.error = false;
 
             if(liveboard.length > 0){

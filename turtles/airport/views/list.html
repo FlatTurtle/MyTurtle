@@ -1,6 +1,7 @@
 <div class="header">
     <i class="plane"></i>
     <h2>{{airport}}</h2>
+    <h4>{{type}}</h4>
 </div>
 <div class="results">
     <ul>
@@ -11,7 +12,12 @@
                     {{vehicle}}
                 </div>
                 {{#delay}}
-                    <h3 class="red">{{airport.city}} - {{airport.country}}</h3>
+                    {{#early}}
+                        <h3>{{airport.city}} - {{airport.country}}</h3>
+                    {{/early}}
+                    {{^early}}
+                        <h3 class="red">{{airport.city}} - {{airport.country}}</h3>
+                    {{/early}}
                 {{/delay}}
                 {{^delay}}
                     <h3>{{airport.city}} - {{airport.country}}</h3>
@@ -19,8 +25,14 @@
             </div>
             <div class="time">
                 {{#delay}}
-                    <p class="red">{{time}}</p>
-                    <p class="red">+{{delay}}</p>
+                    {{#early}}
+                        <p class="green">{{time}}</p>
+                        <p class="green">-{{early}}</p>
+                    {{/early}}
+                    {{^early}}
+                        <p class="red">{{time}}</p>
+                        <p class="red">+{{delay}}</p>
+                    {{/early}}
                 {{/delay}}
                 {{^delay}}
                     <p>{{time}}</p>
