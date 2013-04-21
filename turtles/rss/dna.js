@@ -9,6 +9,7 @@
 
     var collection = Backbone.Collection.extend({
         initialize : function(models, options) {
+            var self = this;
             log.debug("TURTLE - RSS - Initialize");
             // prevents loss of "this" inside methods
             _.bindAll(this, "refresh");
@@ -27,7 +28,9 @@
 
             // automatic collection refresh each 4 minutes, this will
             // trigger the reset event
-            refreshInterval = window.setInterval(this.refresh, 240000);
+            setTimeout(function(){
+                refreshInterval = setInterval(self.refresh, 240000);
+            }, Math.round(Math.random()*5000));
         },
         refresh : function() {
             log.debug("TURTLE - RSS - Refresh");

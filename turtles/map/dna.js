@@ -13,6 +13,7 @@
         traffic : null,
 
         initialize : function() {
+            var self = this;
             // prevents loss of "this" inside methods
             _.bindAll(this, "refresh");
             _.bindAll(this, "traffic");
@@ -30,7 +31,9 @@
             this.on("shown", this.refresh);
             this.on("reconfigure", this.render);
 
-            refreshInterval = setInterval(this.traffic, 240000);
+            setTimeout(function(){
+                refreshInterval = setInterval(self.traffic, 240000);
+            }, Math.round(Math.random()*5000));
         },
         traffic : function() {
             var self = this;

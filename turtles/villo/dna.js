@@ -2,6 +2,7 @@
 
     var collection = Backbone.Collection.extend({
         initialize : function(models, options) {
+            var self = this;
             // prevents loss of 'this' inside methods
             _.bindAll(this, "refresh", "configure");
 
@@ -16,12 +17,18 @@
 
             // automatic collection refresh each minute, this will
             // trigger the reset event
-            refreshInterval = window.setInterval(this.refresh, 60000);
+            setTimeout(function(){
+                refreshInterval = setInterval(self.refresh, 60000);
+            }, Math.round(Math.random()*5000));
         },
         configure : function() {
             // Walking time
-            this.options.time_walk = formatTime(this.options.time_walk);
-            this.trigger("reset");
+            if(this.options.time_walk >= 0){
+                this.options.time_walk = formatTime(this.options.time_walk);
+                this.trigger("reset");
+            }else{
+                this.options.time_walk = false;
+            }
 
             // don't fetch if there is no location
             if (this.options.location == null || !this.options.location)

@@ -2,6 +2,7 @@
 
     var collection = Backbone.Collection.extend({
         initialize : function(models, options) {
+            var self = this;
             log.debug("TURTLE - WEATHER - Initialize");
             // prevents loss of 'this' inside methods
             _.bindAll(this, "refresh");
@@ -17,7 +18,9 @@
 
             // automatic collection refresh each 5 minutes, this will
             // trigger the reset event
-            refreshInterval = window.setInterval(this.refresh, 300000);
+            setTimeout(function(){
+                refreshInterval = setInterval(self.refresh, 300000);
+            }, Math.round(Math.random()*5000));
         },
         refresh : function() {
             log.debug("TURTLE - WEATHER - Refresh");
@@ -65,40 +68,49 @@
                 var now = data[0].time;
 
                 for (var i in data) {
-
                     // minutes from now
                     var delta = (data[i].time - now) / 60;
-
-                    // text
-                    if (delta == 0)
+                    if(delta >= 0){
+                        // format the time
+                        if (delta == 0)
                         data[i].text = "now";
-                    else if (delta > 60)
-                        data[i].text = "in " + Math.round(delta/60*10)/10 + " hours";
-                    else if (delta == 60)
-                        data[i].text = "in 1 hour";
-                    else
-                        data[i].text = "in " + delta + " min";
+                        if (delta > 60 && delta%60 == 0)
+                            data[i].text = "in " + Math.round(delta/60) + " hours";
+                        else if (delta > 60)
+                            data[i].text = "in " + Math.floor(delta/60) + "h" + Math.floor(delta%60);
+                        else if (delta == 60)
+                            data[i].text = "in 1 hour";
+                        else
+                            data[i].text = "in " + delta + " min";
 
-                    // raining?
-                    data[i].regular = new Object();
-                    data[i].regular.raining = parseInt(data[i].milimeter) != 0;
+                        // raining?
+                        data[i].regular = new Object();
+                        data[i].regular.raining = parseInt(data[i].milimeter) != 0;
 
-                    if (i == 0) {
-                        // first item
-                        results.push(data[i]);
-                    }else if(raining && !data[i].regular.raining) {
-                        // sunshine
-                        results.push(data[i]);
-                    }else if(!raining && data[i].regular.raining) {
-                        // raining
-                        results.push(data[i]);
-                    }else if(keepMinutes.indexOf(delta) > -1) {
-                        // delta is a keep value
-                        keep.push(data[i]);
+                        // select only the interesting results
+                        if (i == 0) {
+                            // first item
+                            results.push(data[i]);
+                        }else if(raining && !data[i].regular.raining) {
+                            // sunshine
+                            results.push(data[i]);
+                        }else if(!raining && data[i].regular.raining) {
+                            // raining
+                            results.push(data[i]);
+                        }else if(keepMinutes.indexOf(delta) > -1) {
+                            // delta is a keep value
+                            keep.push(data[i]);
+                        }
+
+                        raining = data[i].regular.raining;
                     }
-
-                    raining = data[i].regular.raining;
                 }
+            }
+
+            var show_expected = false;
+            // Add another square to show expected (when there is no change in weather expected)
+            if(results.length == 1){
+                show_expected = true;
             }
 
             // Add other data or keepers if there is not enough change
@@ -151,6 +163,14 @@
                     });
                 }
             }
+
+            if(show_expected){
+                var expected = jQuery.extend(true, {}, results[0]);
+                expected.text = "expected";
+                results = results.slice(0,3);
+                results.push(expected);
+            }
+
             return results.slice(0,4);
         }
     });

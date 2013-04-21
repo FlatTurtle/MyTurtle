@@ -26,16 +26,16 @@ window.Screen = (function() {
 
         // populate screen location properties
         Screen.location =  {
-                address : config.interface.location,
-                latitude : config.interface.latitude,
-                longitude : config.interface.longitude,
-                geocode : config.interface.latitude + "," + config.interface.longitude
+                address : config['interface'].location,
+                latitude : config['interface'].latitude,
+                longitude : config['interface'].longitude,
+                geocode : config['interface'].latitude + "," + config['interface'].longitude
         };
         log.info(" Populated location properties");
         log.debug(" Screen.location: ",  Screen.location);
 
         // setup interface
-        Interface.setup(config.interface);
+        Interface.setup(config['interface']);
         log.info(" Done initializing interface");
 
         // create panes

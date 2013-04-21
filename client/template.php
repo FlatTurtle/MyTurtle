@@ -4,6 +4,16 @@
 
     // Load some config variables
     $config = @parse_ini_file("config.ini");
+
+    // Clear previous log file
+    $safe_alias = preg_replace('/[^A-Za-z0-9_\-]/', '_', $alias);
+    $log_file = "client/logs/log". $safe_alias;
+    if(ENVIRONMENT == 'development'){
+        $log_file = "client/logs/log";
+        $safe_alias = "";
+    }
+    $fh = fopen($log_file, 'w') or die("Can't write to logs folder, make it writable");
+    fclose($fh);
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,9 +26,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="client/css/normalize.css?<?php echo $rand; ?>">
-        <link rel="stylesheet" href="client/css/main.css?<?php echo $rand; ?>">
-        <link rel="stylesheet" href="client/css/leaflet.css?<?php echo $rand; ?>">
+        <link rel="stylesheet" href="client/css/style.css?<?php echo $rand; ?>">
         <link type="text/css" rel="stylesheet" href="//fast.fonts.com/cssapi/66253153-9c89-413c-814d-60d3ba0d6ac2.css"/>
     </head>
     <body>
@@ -26,27 +34,14 @@
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
-        <div id="container" class="clearfix">
-
-        </div>
+        <div id="container" class="clearfix"></div>
 
         <footer>
-            <div id='flatturtle-logo' class='logo' style='background-image:url("client/css/images/logo.jpg")'></div>
-            <div id='client-logo' class='logo' style='background-image:url("client/css/images/logo_placeholder.png")'></div>
+            <div id='flatturtle-logo' class='logo' style='background-image:url("client/images/logo.jpg")'></div>
+            <div id='client-logo' class='logo' style='background-image:url("client/images/logo_placeholder.png")'></div>
         </footer>
 
-        <?php
-            // Clear previous log file
-            $safe_alias = preg_replace('/[^A-Za-z0-9_\-]/', '_', $alias);
-            $log_file = "client/logs/log". $safe_alias;
-            if(ENVIRONMENT == 'development'){
-                $log_file = "client/logs/log";
-                $safe_alias = "";
-            }
-            $fh = fopen($log_file, 'w') or die("Can't write to logs folder, make it writable");
-            fclose($fh);
-        ?>
-        <script src="client/js/libs/log4javascript.js?<?php echo $rand; ?>"></script>
+        <script src="client/js/log4javascript.min.js?<?php echo $rand; ?>"></script>
         <script>
             // Overwrite alerts
             window.alert = function(text) {
@@ -92,49 +87,56 @@
 
             log.info("Start loading libraries");
         </script>
-
-        <script src="client/js/libs/leaflet.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/libs/wax.leaf.min.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/libs/jquery.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/libs/underscore.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/libs/backbone.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/libs/mustache.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/libs/tinycolor.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/libs/later.js?<?php echo $rand; ?>"></script>
+<?php
+    if(ENVIRONMENT != "development"){
+        // Load minified javascript
+?>
+        <script type="text/javascript" src="client/js/script.min.js?<?php echo $rand; ?>"></script>
+<?php
+    }else{
+        // Load unminified javascript files
+?>
+        <script src="src/js/libs/leaflet.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/libs/wax.leaf.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/libs/jquery.min.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/libs/underscore.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/libs/backbone.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/libs/mustache.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/libs/tinycolor.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/libs/later.js?<?php echo $rand; ?>"></script>
 
         <script type="text/javascript">
             log.info("Done loading libraries");
             log.info("Start loading core files");
         </script>
 
-        <script src="client/js/core/functions.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/core/screen.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/core/interface.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/core/turtles.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/core/panes.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/core/jobs.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/core/functions.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/core/screen.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/core/interface.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/core/turtles.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/core/panes.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/core/jobs.js?<?php echo $rand; ?>"></script>
 
         <script type="text/javascript">
             log.info("Done loading core files");
             log.info("Start loading plugin files");
         </script>
 
-        <script src="client/js/plugins/clock.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/plugins/google.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/plugins/power.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/plugins/message.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/plugins/overlay.js?<?php echo $rand; ?>"></script>
-        <script src="client/js/plugins/footer.js?<?php echo $rand; ?>"></script>
-
+        <script src="src/js/plugins/clock.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/plugins/google.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/plugins/power.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/plugins/message.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/plugins/overlay.js?<?php echo $rand; ?>"></script>
+        <script src="src/js/plugins/footer.js?<?php echo $rand; ?>"></script>
+<?php
+    }
+?>
         <script type="text/javascript">
-            log.info("Done loading plugin files");
-
             // Here we go!
             log.info("Booting!");
             log.debug("Alias: <?php echo $alias; ?>");
 
             Screen.load('<?php echo $alias; ?>.json?<?php echo $rand; ?>');
         </script>
-
     </body>
 </html>

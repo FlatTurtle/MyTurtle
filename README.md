@@ -3,7 +3,7 @@ MyTurtle
 
 A modular HTML5 interface to display "turtles" on a digital signage template. Turtles included. This code should run on an external server, which makes it possible to maintain your digital signage solution into the cloud.
 
-This is a project by [FlatTurtle](http://flatturtle.com). It's the back-end for our digital signage platform. FlatTurtle is a member of the [iRail NPO](http://hello.iRail.be).
+This is a project by [FlatTurtle](http://flatturtle.com). It's the back-end for our digital signage platform. FlatTurtle is a member of the [iRail npo](http://hello.iRail.be).
 
 Features
 ========

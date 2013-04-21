@@ -7,6 +7,7 @@
 
      var collection = Backbone.Collection.extend({
          initialize : function(models, options) {
+            var self = this;
              // prevents loss of 'this' inside methods
              _.bindAll(this, "refresh", "configure", "parse");
 
@@ -18,8 +19,10 @@
 
              options.error = false;
 
-             // automatic collection refresh each 5 minutes
-             refreshInterval = window.setInterval(this.refresh, 900000);
+             // automatic collection refresh
+            setTimeout(function(){
+                refreshInterval = setInterval(refresh, 900000);
+            }, Math.round(Math.random()*5000));
          },
          configure : function() {
             // don't fetch if there is no data

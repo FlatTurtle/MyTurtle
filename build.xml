@@ -1,116 +1,154 @@
-<?xml version="1.0"?>
-<project name="FlatTurtle Apache Ant build script" default="initialize">
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Build script for MyTurtle
+    @author: Michiel Vancoillie (michiel@irail.be)
+-->
+<project name="myturtle" default="build" basedir=".">
 
-    <!--
-    *************************************************
-    * PROPERTIES *
-    *************************************************
-    -->
-    <property name="template_dir" value="templates/default" />
-    <property name="core_dir" value="core" />
+    <description>MyTurtle</description>
 
-    <property name="css_dir" value="${template_dir}/css" />
-    <property name="js_dir" value="${template_dir}/js" />
-
-    <!--
-    *************************************************
-    * YUI COMPRESSOR *
-    *************************************************
-    -->
-    <target name="compress">
-        <java jar="tools/yuicompressor.jar" fork="true">
-            <arg value="${file}" />
-            <arg value="-o" />
-            <arg value="${file}" />
-        </java>
-        <echo>${file}</echo>
+    <target name="-load.properties"
+        description="Set properties for this build">
+        <property name="devdir" value="src"/>
+        <!--YUI Compressor location-->
+        <property name="yui.dir" value="${devdir}/tools/yuicompressor.jar"/>
+        <!--Source JS dir-->
+        <property name="src.js.dir" value="${devdir}/js"/>
+        <!--Output dir-->
+        <property name="build.dir" value="client"/>
+        <!--Build version information -->
+        <property name="build.major" value="1"/>
+        <property name="build.minor" value="0"/>
     </target>
 
-    <!--
-    *************************************************
-    * TEMPLATE STYLESHEET *
-    *************************************************
-    -->
-    <target name="concat_css">
-        <concat destfile="${css_dir}/style.min.css">
-            <filelist id="files" dir="${css_dir}">
-                <file name="style.css" />
+
+    <!--Create build directories-->
+    <target name="-init" depends="-load.properties"
+        description="Create build directory structure">
+        <!--Delete previous build files-->
+        <delete dir="${build.dir}/js"/>
+
+        <!--Recreate the build directories-->
+        <mkdir dir="${build.dir}/js"/>
+    </target>
+
+
+    <!--Concatenate JS files-->
+    <target name="-js.concatenate" depends="-init"
+        description="Concatenates specified Javascript files">
+        <!-- Core -->
+        <concat destfile="${build.dir}/js/core.js">
+            <fileset
+                dir="${src.js.dir}"
+                includes="core/*.js"/>
+        </concat>
+
+        <!-- Libraries copy-->
+        <copy todir="${build.dir}/js">
+            <fileset
+                dir="${src.js.dir}/libs/"
+                includes="*.js"
+                excludes="jquery.min.js"/>
+        </copy>
+
+        <!-- Plugins -->
+        <concat destfile="${build.dir}/js/plugins.js">
+            <fileset
+                dir="${src.js.dir}"
+                includes="plugins/*.js"/>
+        </concat>
+        <echo>Finished</echo>
+    </target>
+
+
+    <!--Minify JS files-->
+    <target name="-js.minify" depends="-js.concatenate"
+        description="Minifies JavaScript files">
+        <apply executable="java" parallel="false" dest="${build.dir}/js">
+            <fileset
+                dir="${build.dir}/js"
+                includes="*.js"
+                excludes="log4javascript.min.js"/>
+            <arg line="-jar"/>
+            <arg path="${yui.dir}"/>
+            <srcfile/>
+            <arg line="-o"/>
+            <mapper type="glob" from="*.js" to="*.min.js"/>
+            <targetfile/>
+        </apply>
+        <echo>Finished</echo>
+    </target>
+
+    <!--Composer libs file (order is important)-->
+    <target name="-compose.libs" depends="-js.minify"
+        description="Build libs file">
+        <concat destfile="${build.dir}/js/libs.min.js">
+            <filelist dir="${build.dir}/js">
+                <file name="leaflet.min.js"/>
+                <file name="wax.leaf.min.js"/>
+            </filelist>
+            <filelist dir="${src.js.dir}/libs">
+                <file name="jquery.min.js"/>
+            </filelist>
+            <filelist dir="${build.dir}/js">
+                <file name="underscore.min.js"/>
+                <file name="backbone.min.js"/>
+                <file name="mustache.min.js"/>
+                <file name="tinycolor.min.js"/>
+                <file name="later.min.js"/>
             </filelist>
         </concat>
+        <echo>Finished</echo>
     </target>
 
-    <target name="compress_css" depends="concat_css">
-        <antcall target="compress">
-            <param name="file" value="${css_dir}/style.min.css" />
-        </antcall>
-    </target>
+    <!-- Concat it all -->
+    <target name="-concat.all" depends="-compose.libs"
+        description="Build one file">
 
-    <!--
-    *************************************************
-    * TEMPLATE JAVASCRIPT *
-    *************************************************
-    -->
-    <target name="concat_js">
-        <concat destfile="${js_dir}/application.min.js">
-            <filelist id="files" dir="${js_dir}">
-                <file name="libs/jquery.tmpl.js" />
-                <file name="turtles.loader.js" />
+        <echo file="${build.dir}/js/libs.min.js" append="true">
+            log.info("Done loading libraries");
+            log.info("Start loading core files");
+        </echo>
+        <echo file="${build.dir}/js/core.min.js" append="true">
+            log.info("Done loading core files");
+            log.info("Start loading plugin files");
+        </echo>
+        <echo file="${build.dir}/js/plugins.min.js" append="true">
+            log.info("Done loading plugin files");
+        </echo>
+
+        <concat destfile="${build.dir}/js/script.min.js">
+            <filelist dir="${build.dir}/js">
+                <file name="libs.min.js"/>
+                <file name="core.min.js"/>
+                <file name="plugins.min.js"/>
             </filelist>
         </concat>
+        <echo>Finished</echo>
     </target>
 
-    <target name="concat_plugins">
-        <concat destfile="${js_dir}/plugins.min.js">
-            <fileset id="files" dir="${js_dir}/plugins" includes="*.js" />
-        </concat>
+    <!-- Clean -->
+    <target name="-clean" depends="-concat.all"
+        description="Clean build directory">
+        <delete includeemptydirs="true">
+            <fileset dir="${build.dir}/js" defaultexcludes="false">
+                <exclude name="log4javascript.min.js" />
+                <exclude name="script.min.js" />
+            </fileset>
+        </delete>
+        <echo>Finished</echo>
     </target>
 
-    <target name="compress_js" depends="concat_js">
-        <antcall target="compress">
-            <param name="file" value="${js_dir}/application.min.js" />
-        </antcall>
+    <!--Build-->
+    <target name="build"
+        description="Builds project files for production use"
+        depends="
+            -load.properties,
+            -init,
+            -js.concatenate,
+            -js.minify,
+            -compose.libs,
+            -concat.all,
+            -clean">
     </target>
-
-    <target name="compress_plugins" depends="concat_plugins">
-        <antcall target="compress">
-            <param name="file" value="${js_dir}/plugins.min.js" />
-        </antcall>
-    </target>
-
-    <!--
-    *************************************************
-    * CORE JAVASCRIPT *
-    *************************************************
-    -->
-    <target name="concat_core">
-        <concat destfile="${core_dir}/core.min.js">
-            <filelist id="files" dir="${core_dir}">
-                <file name="underscore.js" />
-                <file name="jquery.js" />
-                <file name="backbone.js" />
-                <file name="turtles.js" />
-                <file name="jobs.js" />
-            </filelist>
-        </concat>
-    </target>
-
-    <target name="compress_core" depends="concat_core">
-        <antcall target="compress">
-            <param name="file" value="${core_dir}/core.min.js" />
-        </antcall>
-    </target>
-
-    <!--
-    *************************************************
-    * INITIALIZE *
-    *************************************************
-    -->
-    <target name="initialize">
-       <antcall target="compress_core"  />
-        <antcall target="compress_css" />
-        <antcall target="compress_js"  />
-        <antcall target="compress_plugins"  />
-        <echo>Done!</echo>
-    </target>
-
 </project>

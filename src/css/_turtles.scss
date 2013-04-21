@@ -1,0 +1,617 @@
+
+/* ==============
+* LOCATION TURTLE > MAIN
+============== */
+.widget .social {
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+/* ==========================================================================
+   Weather
+   ========================================================================== */
+.widget .weather {
+    width: 100%;
+    padding-bottom: 90px;
+    text-align: center;
+}
+
+.widget .weather .weatherBox {
+    width: 22%;
+    height: auto;
+    float: left;
+}
+
+.widget .weather .weatherBox {
+    margin-left: 4%;
+}
+
+.widget .weather .weatherBox:first-child {
+    margin-left: 0;
+}
+
+.widget .weather .weatherBox .type {
+    width: 100%;
+    font-size: 3em;
+    font-family: "Soho Gothic W01 Bold";
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 125px;
+    line-height: 125px;
+}
+
+.widget .weather .weatherBox .type.wind{
+    font-size: 2.5em;
+    line-height: 100px;
+}
+
+.widget .weather .weatherBox .type span{
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.widget .weather .weatherBox .type p{
+    font-size: 20px;
+    margin-top: -60px;
+}
+
+
+.widget .weather .weatherBox .time {
+    width: 100%;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.4);
+    line-height: 50px;
+    font-size: 1.3em;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+.widget .weather .weatherBox .type i {
+    width: 100%;
+    max-width: 160px;
+    height: 125px;
+    margin: auto;
+    background-position: center center;
+    background-size: 100%;
+}
+
+.widget .weather .weatherBox:after {
+    content: "";
+    background-image: url(../images/shadow_bottom.png);
+    background-size: 100%;
+    background-position: center top;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    height: 5px;
+    display: block;
+}
+
+/* ==========================================================================
+   Weather icons
+   ========================================================================== */
+.mist {
+    background-image: url(../images/FT__0000_mist.png);
+}
+
+.bliksem {
+    background-image: url(../images/FT__0001_bliksem.png);
+}
+
+.sneeuw {
+    background-image: url(../images/FT__0002_sneeuw.png);
+}
+
+.hagel {
+    background-image: url(../images/FT__0003_hagel.png);
+}
+
+.zwareregen {
+    background-image: url(../images/FT__0004_zwareregen.png);
+}
+
+.regen {
+    background-image: url(../images/FT__0005_regen.png);
+}
+
+.wisselvallig {
+    background-image: url(../images/FT__0006_wisselvallig.png);
+}
+
+.lichtbewolkt {
+    background-image: url(../images/FT__0007_licht-bewolkt.png);
+}
+
+.zon {
+    background-image: url(../images/FT__0008_zonnig.png);
+}
+
+/* ==============
+* LOCATION TURTLE > MAIN (pt. 2)
+============== */
+.widget .social #leftColumn {
+    float: left;
+    width: 30%;
+    height: auto;
+}
+
+.widget .pane.column {
+    -webkit-column-count: 2;
+    -webkit-column-gap: 5px;
+    -moz-column-count: 2;
+    -moz-column-gap: 5px;
+    column-count: 2;
+    column-gap: 5px;
+}
+
+.widget .turtle {
+    width: 94%;
+    padding: 3%;
+    display: block;
+}
+
+.widget .turtle.nopadding {
+    width: 100%;
+    padding: 0px;
+}
+
+/* ==============
+* LOCATION TURTLE > FINANCES
+============== */
+.widget .com_shares {
+    width: auto;
+    max-width: 99%;
+    border: 3px solid #FFF;
+    min-height: 70px;
+    padding: 2%;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.widget .com_shares h2 {
+    font-family: "Soho Gothic W01 Bold";
+    font-size: 1.5em;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+    margin-bottom: 2%;
+}
+
+.widget .com_shares .numbers{
+    float: left;
+    min-width: 60%;
+    padding: 20px 0px;
+    position: relative;
+}
+
+.widget .com_shares .ask{
+    padding: 0;
+    font-family: "Soho Gothic W01 Bold";
+    margin-right: 4%;
+    font-size: 2.2em;
+    line-height: 1.5em;
+    margin-top: 1%;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+    display: inline-block;
+    float:left;
+}
+
+.widget .com_shares .ask span{
+    padding-left: 20px;
+    font-size: 0.8em;
+}
+
+.widget .com_shares .name{
+    clear: left;
+}
+
+.widget .com_shares .change {
+    top: 0px;
+    padding: 10px;
+    margin-left: 5px;
+    display: inline-block;
+    float:left;
+}
+
+.widget .com_shares li {
+    display: block;
+    float:right;
+    clear: both;
+    padding: 1px;
+}
+
+.widget .com_shares .more {
+    bottom: 0px;
+    float: right;
+}
+
+.widget .com_shares .more li{
+    padding:5px;
+}
+
+.turtle.finance .note{
+    padding-bottom: 2%;
+    text-align: right;
+}
+
+.shares {
+    width: 96%;
+    min-height: 80px;
+    margin-bottom: 25px;
+    padding: 2%;
+    position: relative;
+}
+
+.shares div:first-child {
+    width: 30%;
+    height: auto;
+    float: left;
+}
+
+.shares h2 {
+    font-family: "Soho Gothic W01 Bold";
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+    margin-bottom: 8%;
+    margin-top: 2%;
+    font-size: 1.8em;
+}
+
+.shares h3 {
+    text-transform: uppercase;
+    padding: 1.2% 2%;
+    display: inline-block;
+}
+
+.shares .red, .com_shares .red {
+    color: #ff0000;
+}
+
+.shares .green,.com_shares .green {
+    color: #1fd31f;
+}
+
+.shares .main_number {
+    position: absolute;
+    font-family: "Soho Gothic W01 Bold";
+    right: 0px;
+    top:0px;
+    text-align: right;
+    vertical-align: middle;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top:2%;
+    font-size: 1.8em;
+    line-height: 1.1em;
+    height: 98%;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.shares .dark-bg span{
+    display: inline-block;
+    float:right;
+    padding: 1.2% 2%;
+}
+
+
+.shares .dark-bg{
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 40%;
+    position: absolute;
+}
+
+/* ==============
+* LOCATION TURTLE > SOCIAL MEDIA
+============== */
+.fsq {
+    width: 92%;
+    padding: 16px 4% 16px 4%;
+    min-height: 30px;
+    height: auto;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.instgrm {
+    min-height: 30px;
+    height: auto;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    margin-bottom: 35px;
+    display: block;
+    padding-bottom: 25px;
+}
+
+.instgrm h5 {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 0;
+    text-align: right;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
+}
+
+.instgrm:after {
+    content: "";
+    background-image: url(../images/shadow_bottom.png);
+    background-size: 100%;
+    background-position: center top;
+    background-repeat: no-repeat;
+    height: 20px;
+    display: block;
+}
+
+.tweet {
+    width: 100%;
+    position: relative;
+    display: block;
+}
+
+.tweet .body {
+    padding: 25px;
+    line-height: 1.5em;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+}
+
+.tweet .author {
+    width: 100%;
+    height: 50px;
+}
+
+.tweet .author h5 {
+    height: 35px;
+    line-height: 35px;
+    position: relative;
+    font-weight: normal;
+    margin: 0px;
+}
+
+.tweet .author .account{
+    opacity: 0.3;
+}
+
+.tweet .triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-top-width: 20px;
+    border-left: 0px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom-color: transparent;
+    position: absolute;
+    top: 0px;
+    margin-left: 12px;
+}
+
+.villo {
+    position: relative;
+}
+
+.villo .amount {
+    position: absolute;
+    background: #333;
+    right: 160px;
+    height: 78px;
+    line-height: 80px;
+    top: 0px
+}
+
+.villo .small {
+    color: #FFF;
+    font-size: 2em;
+    display: inline-block;
+    padding-right: 4px;
+}
+
+.villo .big {
+    color: #888;
+    font-size: 2.3em;
+}
+
+.turtle.info .info {
+    width: 96%;
+    padding: 20px 2% 20px 2%;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    line-height: 1.9em;
+}
+
+.turtle.info .info i{
+    display: inline;
+}
+
+.turtle.info .info h2{
+    margin: 25px 0px 20px 0px;
+}
+
+.turtle.info .info h3{
+    margin: 15px 0px 10px 0px;
+}
+
+.turtle.info .info ul {
+    list-style: disc !important;
+    list-style-type: disc !important;
+}
+
+.turtle.info .info ul li{
+    float: none !important;
+    list-style: disc !important;
+    list-style-type: disc !important;
+}
+
+.turtle.info .info ol, .turtle.info .info ul {
+    padding: 10px;
+    padding-left: 55px;
+}
+
+.rss {
+    width: 96%;
+    padding: 20px 2% 40px 2%;
+    min-height: 80px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    margin-bottom: 30px;
+    display: block;
+    position: relative;
+}
+
+.rss .time {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+}
+
+.rss .img {
+    width: 30%;
+    display: inline-block;
+    float: left;
+    margin: 26px 10px 10px 0;
+}
+
+.rss .text{
+    margin-top: 15px;
+    line-height: 1.5em;
+}
+
+.rss .source{
+    font-size: 12px;
+    text-align: right;
+    float:right;
+    margin: 0px;
+    padding-top: 4px;
+    text-shadow: none;
+}
+
+.rss .img img {
+    max-width: 100%;
+    height: auto !important;
+}
+
+.rss h2 {
+    line-height: 1.1em;
+}
+
+.rss .imagewall {
+    padding:0px;
+    padding-top: 10px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.rss .imagewall p.source{
+    padding-left: 10px;
+    padding-right: 3%;
+    /*clear: both;*/
+    float: none;
+}
+
+.rss .imagewall p{
+    margin-bottom: 10px;
+}
+.rss .imagewall .wall{
+   /* Prevent vertical gaps */
+   line-height: 0;
+
+   -webkit-column-count: 2;
+   -webkit-column-gap:   0px;
+   -moz-column-count:    2;
+   -moz-column-gap:      0px;
+   column-count:         2;
+   column-gap:           0px;
+
+}
+
+@media (max-width: 1200px) {
+  .rss .imagewall .wall {
+  -moz-column-count:    1;
+  -webkit-column-count: 1;
+  column-count:         1;
+  }
+}
+
+.rss .imagewall .wall img {
+  /* Just in case there are inline attributes */
+  width: 100% !important;
+  height: auto !important;
+}
+
+.map .legend{
+    z-index: 1000;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    line-height: 30px;
+    bottom: 0px;
+    right: 0px;
+    font-size: 13px;
+    text-align: right;
+}
+
+.map .legend li{
+    display: block;
+    float: none;
+}
+
+.map .legend li span{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.map .legend li.black{
+    color: #000;
+}
+
+/* ==============
+* LOCATION TURTLE > FLOORS
+============== */
+.floor {
+    width: 92%;
+    padding: 16px 4% 16px 4%;
+    min-height: 80px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    margin-bottom: 30px;
+    display: block;
+    font-size: 2.9em;
+}
+
+.floor h2 {
+    font-size: 1em;
+    width: 20%;
+    margin-top: 28px;
+    float: left;
+}
+
+.floor .floors {
+    float: right;
+    top: 0px;
+    font-size: 0.6em;
+    width: 80%;
+}
+
+.floor .floors span{
+    padding-left: 30%;
+}
+
+.floor .floors div.bg{
+    position: absolute;
+    width: 25%;
+    height: 35px;
+    background-size: contain;
+}
+
+.floor ul li {
+    line-height: 35px;
+    height: 35px;
+    display: block;
+    float: none;
+    margin-bottom: 20px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.floor ul li:last-child{
+    margin-bottom: 5px;
+}
+
+.floor ul li:only-child{
+    line-height: 80px;
+    margin: 0px;
+}
