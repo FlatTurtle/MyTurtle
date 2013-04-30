@@ -67,7 +67,7 @@
                     var today = new Date();
                     var query = this.options.type + "/" + encodeURIComponent(this.options.station) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
-                    var url = "http://data.irail.be/NMBS/" + query + ".json";
+                    var url = "https://data.irail.be/NMBS/" + query + ".json";
                     var self = this;
                     $.getJSON(url, function(data){
                         self.parse(data);
@@ -85,7 +85,7 @@
                 }
 
                 var self = this;
-                $.getJSON("http://data.irail.be/MIVBSTIB/Stations.json?name=" + encodeURIComponent(this.options.station), function(data) {
+                $.getJSON("https://data.irail.be/MIVBSTIB/Stations.json?name=" + encodeURIComponent(this.options.station), function(data) {
                     if (data.Stations[0] != undefined) {
                         self.options.location = data.Stations[0].name.capitalize();
                         self.trigger("reset");
@@ -95,7 +95,7 @@
                 var today = new Date();
                 var query = encodeURIComponent(this.options.station) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
-                var url = "http://data.irail.be/MIVBSTIB/"+ this.options.type + "/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);
+                var url = "https://data.irail.be/MIVBSTIB/"+ this.options.type + "/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);
 
                 $.getJSON(url, function(data){
                     self.parse(data);

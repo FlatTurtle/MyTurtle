@@ -53,7 +53,7 @@
         },
         url : function() {
             // remote source url
-            return "http://data.irail.be/spectql/twitter/search/" + encodeURIComponent(this.options.search) + "/results.limit(" + this.options.limit + "):json";
+            return "https://data.irail.be/spectql/twitter/search/" + encodeURIComponent(this.options.search) + "/results.limit(" + this.options.limit + "):json";
         },
         parse : function(json) {
             var tweets = json.spectql;

@@ -64,7 +64,7 @@
             var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
             var self = this;
-            $.getJSON("http://data.irail.be/NMBS/Liveboard/" + query + ".json", function(data) {
+            $.getJSON("https://data.irail.be/NMBS/Liveboard/" + query + ".json", function(data) {
                 if (data.Liveboard.location.name != undefined) {
                     self.options.station = data.Liveboard.location.name.capitalize();
                     self.trigger("reset");
@@ -92,7 +92,7 @@
             var today = new Date();
             var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
-            return "http://data.irail.be/spectql/NMBS/Liveboard/" + query + "/departures.limit(" + parseInt(this.options.limit) + "):json";
+            return "https://data.irail.be/spectql/NMBS/Liveboard/" + query + "/departures.limit(" + parseInt(this.options.limit) + "):json";
         }
         ,
         parse : function(json) {
