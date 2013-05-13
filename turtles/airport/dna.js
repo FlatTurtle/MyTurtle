@@ -49,7 +49,7 @@
             // get the airport name
             var self = this;
             $.ajax({
-                url: "http://data.irail.be/spectql/Airports/Stations%7Bname,code,longitude,latitude%7D?code=='" + encodeURIComponent(self.options.location) + "':json",
+                url: "https://data.irail.be/spectql/Airports/Stations%7Bname,code,longitude,latitude%7D?code=='" + encodeURIComponent(self.options.location) + "':json",
                 dataType: "json",
                 success: function(data) {
                     if (data.spectql.length > 0) {
@@ -104,7 +104,7 @@
 
             // remote source url
             // todo: add departures or arrivals
-            return "http://data.irail.be/Airports/Liveboard/" + query + ".json?direction="+ this.options.type;
+            return "https://data.irail.be/Airports/Liveboard/" + query + ".json?direction="+ this.options.type;
         },
         parse : function(json) {
             log.info("TURTLE - AIRPORT - Parse results");

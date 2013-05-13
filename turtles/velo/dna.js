@@ -55,7 +55,7 @@
             var latitude = this.options.location.split(',')[0];
             var longitude = this.options.location.split(',')[1];
 
-            return "http://data.irail.be/Bikes/Velo.json?lat=" + encodeURIComponent(latitude) + "&long=" + encodeURIComponent(longitude) + "&offset=0&rowcount=1";
+            return "https://data.irail.be/Bikes/Velo.json?lat=" + encodeURIComponent(latitude) + "&long=" + encodeURIComponent(longitude) + "&offset=0&rowcount=1";
         },
         parse : function(json) {
             var velo = json.Velo;

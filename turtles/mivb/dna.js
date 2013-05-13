@@ -49,7 +49,7 @@
                 this.options.station = this.options.location.capitalize();
 
             var self = this;
-            $.getJSON("http://data.irail.be/MIVBSTIB/Stations.json?name=" + encodeURIComponent(this.options.station), function(data) {
+            $.getJSON("https://data.irail.be/MIVBSTIB/Stations.json?name=" + encodeURIComponent(this.options.station), function(data) {
                 if (data.Stations[0] != undefined) {
                     self.options.station = data.Stations[0].name.capitalize();
                     self.trigger("reset");
@@ -79,7 +79,7 @@
             var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
             // remote source url
-            return "http://data.irail.be/MIVBSTIB/Departures/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);;
+            return "https://data.irail.be/MIVBSTIB/Departures/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);;
         },
         parse : function(json) {
             // parse ajax results

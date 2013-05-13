@@ -18,16 +18,12 @@
 
             // default error value
             options.error = false;
-            options.limit = 20;
+            options.limit = 25;
 
             if(!options.route_type)
                 options.route_type = "nmbs";
             else
                 options.route_type =  options.route_type.toLowerCase();
-
-            // default limit
-            if (!options.limit)
-                options.limit = 3;
         },
         configure : function() {
             // reset results
@@ -67,7 +63,7 @@
                     var today = new Date();
                     var query = this.options.type + "/" + encodeURIComponent(this.options.station) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
-                    var url = "http://data.irail.be/NMBS/" + query + ".json";
+                    var url = "https://data.irail.be/NMBS/" + query + ".json";
                     var self = this;
                     $.getJSON(url, function(data){
                         self.parse(data);
@@ -77,7 +73,12 @@
                         self.trigger("reset");
                     });
                 }
-            }else if(this.options.route_type == "mivb"){
+            }else{
+                var datasetURI = 'DeLijn';
+                if(this.options.route_type == "mivb"){
+                    datasetURI = 'MIVBSTIB';
+                }
+
                 this.options.station = this.options.station.capitalize();
 
                 if(this.options.type == null || (this.options.type != 'Departures' && this.options.type != 'Arrivals')){
@@ -85,7 +86,7 @@
                 }
 
                 var self = this;
-                $.getJSON("http://data.irail.be/MIVBSTIB/Stations.json?name=" + encodeURIComponent(this.options.station), function(data) {
+                $.getJSON("http://data.irail.be/" + datasetURI + "/Stations.json?name=" + encodeURIComponent(this.options.station), function(data) {
                     if (data.Stations[0] != undefined) {
                         self.options.location = data.Stations[0].name.capitalize();
                         self.trigger("reset");
@@ -95,7 +96,7 @@
                 var today = new Date();
                 var query = encodeURIComponent(this.options.station) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
-                var url = "http://data.irail.be/MIVBSTIB/"+ this.options.type + "/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);
+                var url = "http://data.irail.be/" + datasetURI + "/"+ this.options.type + "/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);
 
                 $.getJSON(url, function(data){
                     self.parse(data);
@@ -190,7 +191,7 @@
                     this.options.liveboard = data;
                 }
 
-            }else if(this.options.route_type == "mivb"){
+            }else{
                 var data = new Object();
                 data.results = json.Departures;
                 if(data.results == null){
@@ -221,7 +222,11 @@
                     }
                 }
 
-                data.route_type = "MIVB/STIB";
+                data.route_type = "De Lijn";
+                if(this.options.route_type == "mivb"){
+                    data.route_type = "MIVB/STIB";
+                }
+
                 data.mivb = true;
                 this.options.liveboard = data;
             }
