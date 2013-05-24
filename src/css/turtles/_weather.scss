@@ -1,0 +1,107 @@
+.weather {
+    width: 100%;
+    padding-bottom: 90px;
+    text-align: center;
+
+    .box {
+        width: 22%;
+        height: auto;
+        float: left;
+        margin-left: 4%;
+
+        .type{
+            width: 100%;
+            font-size: 3em;
+            font-family: "Soho Gothic W01 Bold";
+            text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.3);
+            height: 125px;
+            line-height: 125px;
+
+            &.wind{
+                font-size: 2.5em;
+                line-height: 100px;
+            }
+
+            span{
+                font-size: 20px;
+                margin-left: 10px;
+            }
+
+            p{
+                font-size: 20px;
+                margin-top: -60px;
+            }
+
+            i {
+                width: 100%;
+                max-width: 160px;
+                height: 125px;
+                margin: auto;
+                background-position: center center;
+                background-size: 100%;
+            }
+        }
+
+        .time {
+            width: 100%;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.4);
+            line-height: 50px;
+            font-size: 1.3em;
+            text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+        }
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:after {
+            content: "";
+            background-image: url(../images/shadow_bottom.png);
+            background-size: 100%;
+            background-position: center top;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+            height: 5px;
+            display: block;
+        }
+    }
+
+    // Weather icons
+    .mist {
+        background-image: url(../images/FT__0000_mist.png);
+    }
+
+    .bliksem {
+        background-image: url(../images/FT__0001_bliksem.png);
+    }
+
+    .sneeuw {
+        background-image: url(../images/FT__0002_sneeuw.png);
+    }
+
+    .hagel {
+        background-image: url(../images/FT__0003_hagel.png);
+    }
+
+    .zwareregen {
+        background-image: url(../images/FT__0004_zwareregen.png);
+    }
+
+    .regen {
+        background-image: url(../images/FT__0005_regen.png);
+    }
+
+    .wisselvallig {
+        background-image: url(../images/FT__0006_wisselvallig.png);
+    }
+
+    .lichtbewolkt {
+        background-image: url(../images/FT__0007_licht-bewolkt.png);
+    }
+
+    .zon {
+        background-image: url(../images/FT__0008_zonnig.png);
+    }
+}

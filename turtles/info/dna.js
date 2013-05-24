@@ -33,6 +33,9 @@
         render : function() {
             var self = this;
 
+            // set window height to 100%
+            self.$el.addClass("fullheight");
+
             $.get("turtles/info/views/widget.html", function(template) {
                 var data = {
                     data : self.options.data
@@ -43,6 +46,7 @@
                 self.$el.html(Mustache.render(template, data));
             });
         }
+
     });
 
     // register turtle

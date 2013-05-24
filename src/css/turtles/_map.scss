@@ -1,0 +1,28 @@
+.map{
+    .legend{
+        z-index: 1000;
+        position: absolute;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        line-height: 30px;
+        bottom: 0px;
+        right: 0px;
+        font-size: 13px;
+        text-align: right;
+
+        li{
+            display: block;
+            float: none;
+
+            &.black{
+                color: #000;
+            }
+
+            span{
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+<div class="header">
+    <i class="calendar"></i>
+    <h2>Agenda</h2>
+</div>
+<div class="results">
+    <ul>
+        {{#entries}}
+        <li>
+            <div class='info'>
+                <h3>{{summary}}</h3>
+                <p>{{location}}</p>
+            </div>
+            <div class="time">
+                <p>From: {{start_time}}</p><span>{{start_date}}</span>
+                <p>To: {{end_time}}</p><span class='end_date'>{{end_date}}</span>
+            </div>
+        </li>
+        {{/entries}}
+        {{#error}}
+        <li class='error'>
+            <span class='message'>No planned events</span>
+        </li>
+        {{/error}}
+    </ul>
+</div>

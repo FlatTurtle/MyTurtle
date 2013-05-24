@@ -1,0 +1,24 @@
+.villo {
+    position: relative;
+
+    .amount {
+        position: absolute;
+        background: #333;
+        right: 160px;
+        height: 78px;
+        line-height: 80px;
+        top: 0px
+    }
+
+    .small {
+        color: #FFF;
+        font-size: 2em;
+        display: inline-block;
+        padding-right: 4px;
+    }
+
+    .big {
+        color: #888;
+        font-size: 2.3em;
+    }
+}

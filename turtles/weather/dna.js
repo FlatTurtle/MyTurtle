@@ -73,8 +73,8 @@
                     if(delta >= 0){
                         // format the time
                         if (delta == 0)
-                        data[i].text = "now";
-                        if (delta > 60 && delta%60 == 0)
+                            data[i].text = "now";
+                        else if (delta > 60 && delta%60 == 0)
                             data[i].text = "in " + Math.round(delta/60) + " hours";
                         else if (delta > 60)
                             data[i].text = "in " + Math.floor(delta/60) + "h" + Math.floor(delta%60);

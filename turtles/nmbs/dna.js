@@ -53,7 +53,7 @@
                 return;
 
             // parse via points
-            if(this.options.destination != null){
+            if(this.options.destination != null && this.options.destination != ""){
                 this.options.destination = this.options.destination.split(',');
                 for(var d in this.options.destination){
                     this.options.destination[d] = this.options.destination[d].toLowerCase().trim();
@@ -184,6 +184,12 @@
         },
         matchConnections : function(data){
             var self = this;
+
+            try {
+                json = $.parseJSON(data);
+                data = json;
+            } catch (e) {}
+
             data = data.Vehicles;
 
             // match results from vehicles stops with via's

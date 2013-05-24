@@ -1,0 +1,54 @@
+.floor {
+    width: 92%;
+    padding: 16px 4% 16px 4%;
+    min-height: 80px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    margin-bottom: 30px;
+    display: block;
+    font-size: 2.9em;
+
+    h2 {
+        font-size: 1em;
+        width: 20%;
+        margin-top: 28px;
+        float: left;
+    }
+
+    ul li {
+        line-height: 35px;
+        height: 35px;
+        display: block;
+        float: none;
+        margin-bottom: 20px;
+        position: relative;
+        vertical-align: middle;
+
+        &:last-child{
+            margin-bottom: 5px;
+        }
+
+        &:only-child{
+            line-height: 80px;
+            margin: 0px;
+        }
+    }
+
+
+    .floors {
+        float: right;
+        top: 0px;
+        font-size: 0.6em;
+        width: 80%;
+
+        span{
+            padding-left: 30%;
+        }
+
+        div.bg{
+            position: absolute;
+            width: 25%;
+            height: 35px;
+            background-size: contain;
+        }
+    }
+}

@@ -47,14 +47,18 @@ window.Interface = (function() {
         }
 
         // custom styles
-        var lightColor = tinycolor.desaturate(tinycolor.lighten(value));
+        var lightColor = tinycolor.lighten(value);
         var darkColor = tinycolor.desaturate(tinycolor.darken(value));
         var style = ".text-color { color: " + value + "; }\n"
+                  + ".text-color-light { color: " + lightColor + "; }\n"
+                  + ".text-color-dark { color: " + darkColor + "; }\n"
                   + ".bg-color { background-color: " + value + " !important; }\n"
                   + ".bg-color-light { background-color: " + lightColor + "; }\n"
                   + ".bg-color-dark { background-color: " + darkColor + "; }\n"
-                  + ".border-color { border-color: " + value + " transparent; }\n"
-                  + ".border-color-light { border-color: " + lightColor + " transparent; }\n";
+                  + ".border-color { border-color: " + value + "; }\n"
+                  + ".border-color-light { border-color: " + lightColor + "; }\n"
+                  + ".text-shadow-light { text-shadow: 1px 1px 1px " + tinycolor.saturate(value).toRgbString() + "; }\n"
+                  + ".text-shadow-dark { text-shadow: 1px 1px 1px " + darkColor.toRgbString() + "; }\n";
 
         // add to body
         custom.html(style);

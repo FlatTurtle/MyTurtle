@@ -76,7 +76,7 @@
         },
         url : function() {
             var today = new Date();
-            var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
+            var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/") + "15/00"; //{H}/{M}");
 
             // remote source url
             return "https://data.irail.be/MIVBSTIB/Departures/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);;
@@ -104,6 +104,19 @@
 
                         if (liveboard[i].long_name.split("-").length == 2)
                             liveboard[i].long_name = liveboard[i].long_name.split("-")[1];
+                    }
+
+                    if(liveboard[i].type){
+                        switch (parseInt(liveboard[i].type)) {
+                            case 0:
+                                liveboard[i].type = "tram";
+                                break;
+                            default:
+                                liveboard[i].type = "bus";
+                                break;
+                        }
+                    }else{
+                        liveboard[i].type = "bus";
                     }
                 }
             }else{

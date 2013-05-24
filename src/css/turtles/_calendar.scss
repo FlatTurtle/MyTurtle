@@ -1,0 +1,42 @@
+.turtle.calendar{
+    .results{
+        .info{
+            width: 65%;
+            float:left;
+
+            *{
+                display: block;
+                margin-left: 15px;
+                float: none;
+            }
+        }
+
+        .time{
+            width: 31%;
+            padding: 0 2%;
+            text-align: right;
+            position: relative;
+
+            p{
+                text-align: right;
+                width: 70%;
+                margin:0px;
+                padding:0px;
+            }
+
+            span{
+                width: 30%;
+                text-align: left;
+                font-size: 15px;
+                position: absolute;
+                left: 72%;
+                color: #aaa;
+
+                &.end_date{
+                    top: 40px;
+                }
+            }
+        }
+    }
+
+}

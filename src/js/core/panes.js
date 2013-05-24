@@ -292,8 +292,17 @@ window.Panes = (function() {
              }
         }
 
+        // get previous pane
+        var prefpane = group.find(".pane.active");
+
+        // trigger event for turtles in previous pane
+        prefpane.find(".turtle").each(function() {
+            Turtles.trigger($(this).data("id"), "hide");
+        });
+        prefpane.removeClass("active");
+
+
         // mark pane as active and show
-        group.find(".pane.active").removeClass("active");
         pane.el.addClass("active");
 
         // trigger event for turtles in this pane

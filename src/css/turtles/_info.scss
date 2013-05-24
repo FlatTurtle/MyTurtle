@@ -1,0 +1,48 @@
+.turtle.info{
+
+    .info {
+        width: 100%;
+        height: 100%;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+        line-height: 747px;
+        overflow: hidden;
+
+        .text{
+            padding: 2%;
+            line-height: 1.9em;
+            overflow: hidden;
+            display:inline-table;
+            display: inline-block;
+            vertical-align:middle;
+        }
+
+        i{
+            display: inline;
+        }
+
+        h2{
+            margin: 25px 0px 20px 0px;
+        }
+
+        h3{
+            margin: 15px 0px 10px 0px;
+        }
+
+        ul {
+            list-style: disc !important;
+            list-style-type: disc !important;
+        }
+
+        ul li{
+            float: none !important;
+            list-style: disc !important;
+            list-style-type: disc !important;
+        }
+
+        ol, ul {
+            padding: 10px;
+            padding-left: 55px;
+        }
+    }
+
+}

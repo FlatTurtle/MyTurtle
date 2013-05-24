@@ -30,6 +30,7 @@
             this.options.liveboard = null;
             this.options.connections = null;
             this.options.route = null;
+            this.options.error = false;
 
             if(this.options.route_type == "nmbs"){
 

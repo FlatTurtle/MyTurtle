@@ -4,10 +4,20 @@
  * Stylesheet for the FlatTurtle screens
  */
 
-@import "normalize";
-@import "leaflet";
-@import "base";
-@import "turtles";
+@import "inc/normalize";
+@import "inc/leaflet";
+@import "inc/base";
+@import "turtles/villo";
+@import "turtles/info";
+@import "turtles/twitter";
+@import "turtles/weather";
+@import "turtles/map";
+@import "turtles/signage";
+@import "turtles/finance";
+@import "turtles/rss";
+@import "turtles/image";
+@import "turtles/calendar";
+
 
 $default-color: #21aeb0;
 
@@ -168,6 +178,10 @@ $default-color: #21aeb0;
 
         .bus {
             background-image: url(../images/turtle_header_bus.png);
+        }
+
+        .calendar {
+            background-image: url(../images/turtle_header_calendar.png);
         }
 
 
@@ -374,6 +388,25 @@ $default-color: #21aeb0;
     -webkit-box-shadow: -3px 2px 3px 1px rgba(0, 0, 0, 0.4);
     box-shadow: -3px 2px 3px 1px rgba(0, 0, 0, 0.4);
     color: #FFF;
+
+    .turtle {
+        width: 94%;
+        padding: 3%;
+        display: block;
+
+        &.nopadding {
+            width: 100%;
+            padding: 0px;
+        }
+
+        &.fullheight{
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            margin: 3%;
+            padding: 0px;
+        }
+    }
 }
 
 .widget header {
@@ -750,6 +783,9 @@ div.taxi .line:last-child{
 	*zoom: 1;
 }
 
-.error p{
-    padding:2%;
+.error{
+    p{
+        padding:2%;
+        margin: 3%;
+    }
 }
