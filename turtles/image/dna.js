@@ -11,7 +11,6 @@
 
         initialize : function(models, options) {
             _.bindAll(this, "configure");
-            _.bindAll(this, "nextSlide");
             _.bindAll(this, "shown");
             _.bindAll(this, "hide");
 
@@ -36,32 +35,15 @@
         shown: function(){
             // Resume slideshow
             if(this.options.images && this.options.images.length > 1){
-                this.interval = setInterval(this.nextSlide, this.options.duration);
+                var self = this;
+                this.interval = setInterval(function(){
+                                                            self.trigger("nextSlide");
+                                                        }, this.options.duration);
             }
         },
         hide : function(){
             // Pause slideshow
             clearInterval(this.interval);
-        },
-        nextSlide: function(){
-            // Show next slide
-            var next = $('.turtle.image .slide');
-            var current = $('.turtle.image .slide.active');
-
-            // Check for which slide to show next
-            $('.turtle.image .slide').each(function(){
-                if($(this).hasClass('active')){
-                    if($(this).next()[0]){
-                        next = $(this).next();
-                    }
-
-                    // stop each
-                    return false;
-                }
-            });
-
-            current.removeClass('active');
-            next.addClass('active');
         }
     });
 
@@ -69,7 +51,10 @@
 
         initialize : function() {
             // prevents loss of "this" inside methods
-            _.bindAll(this, "render");
+            _.bindAll(this, "render", "nextSlide");
+
+            // bind render to collection reset
+            this.collection.on("nextSlide", this.nextSlide);
 
             // pre-fetch template file and render when ready
             var self = this;
@@ -98,6 +83,26 @@
                 // set the first active slide
                 this.$el.find('.slide:nth-child(1)').addClass('active');
             }
+        },
+        nextSlide: function(){
+            // Show next slide
+            var next = $('.slide', this.$el);
+            var current = $('.slide.active', this.$el);
+
+            // Check for which slide to show next
+            $('.slide', this.$el).each(function(){
+                if($(this).hasClass('active')){
+                    if($(this).next()[0]){
+                        next = $(this).next();
+                    }
+
+                    // stop each
+                    return false;
+                }
+            });
+
+            current.removeClass('active');
+            next.addClass('active');
         }
     });
 

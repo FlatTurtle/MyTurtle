@@ -50,7 +50,8 @@
             });
         },
         url : function() {
-            return "https://data.flatturtle.com/2/twitter/search/" + encodeURIComponent(this.options.search) + "/" + this.options.limit + ".json";
+            // -RT filters retweets
+            return "https://data.flatturtle.com/2/twitter/search/" + encodeURIComponent(this.options.search) + " -RT/" + this.options.limit + ".json";
         },
         parse : function(json) {
             var tweets = json.search.results;
@@ -60,6 +61,16 @@
                 // date
                 var date = new Date(Date.parse(tweets[i].created_at));
                 tweets[i].created_at = getTimestamp(date);
+
+                if(tweets[i].expanded_text)
+                    tweets[i].text = tweets[i].expanded_text;
+
+                // only show first media entity
+                if(tweets[i].entities.media)
+                    tweets[i].media = tweets[i].entities.media[0];
+
+                // remove t.co links
+                tweets[i].text = tweets[i].text.replace(/(https?:\/\/t\.co\/[^\s]+)/g, '');
 
                 // #tags
                 tweets[i].text = tweets[i].text.replace(/(#[\w-_]+)/g, '<span class="text-color-dark text-shadow-light">$1</span>');
@@ -95,7 +106,8 @@
             if(this.template) {
                 var data = {
                     search : this.options.search,
-                    entries : this.collection.toJSON()
+                    entries : this.collection.toJSON(),
+                    size: this.options.size
                  };
 
                 // add html to container

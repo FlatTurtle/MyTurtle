@@ -46,19 +46,35 @@ window.Interface = (function() {
             $('body').prepend(custom);
         }
 
-        // custom styles
-        var lightColor = tinycolor.lighten(value);
-        var darkColor = tinycolor.desaturate(tinycolor.darken(value));
-        var style = ".text-color { color: " + value + "; }\n"
-                  + ".text-color-light { color: " + lightColor + "; }\n"
-                  + ".text-color-dark { color: " + darkColor + "; }\n"
-                  + ".bg-color { background-color: " + value + " !important; }\n"
-                  + ".bg-color-light { background-color: " + lightColor + "; }\n"
-                  + ".bg-color-dark { background-color: " + darkColor + "; }\n"
-                  + ".border-color { border-color: " + value + "; }\n"
-                  + ".border-color-light { border-color: " + lightColor + "; }\n"
-                  + ".text-shadow-light { text-shadow: 1px 1px 1px " + tinycolor.saturate(value).toRgbString() + "; }\n"
-                  + ".text-shadow-dark { text-shadow: 1px 1px 1px " + darkColor.toRgbString() + "; }\n";
+        // custom color shades
+        var lightFactor = 0.25;
+        var shadeFactor = 0.55;
+        var color = tinycolor(value).toRgb();
+
+        var lightColor = tinycolor({
+            r: ((255 - color.r)*lightFactor) + color.r,
+            g: ((255 - color.g)*lightFactor) + color.g,
+            b: ((255 - color.b)*lightFactor) + color.b
+        });
+
+        var darkColor = tinycolor({
+            r: (color.r*shadeFactor),
+            g: (color.g*shadeFactor),
+            b: (color.b*shadeFactor)
+        });
+
+        var style = '\
+            .text-color { color: ' + value + '; } \
+            .text-color-light { color: ' + lightColor.toHexString() + '; } \
+            .text-color-dark { color: ' + darkColor.toHexString() + '; } \
+            .bg-color { background-color: ' + value +  '!important; } \
+            .bg-color-light { background-color: ' + lightColor.toHexString() + '; } \
+            .bg-color-dark { background-color: ' + darkColor.toHexString() + '; } \
+            .border-color { border-color: ' + value + '; } \
+            .border-color-light { border-color: ' + lightColor.toHexString() + '; } \
+            .text-shadow-light { text-shadow: 1px 1px 1px ' + tinycolor.saturate(value).toRgbString() + '; } \
+            .text-shadow-dark { text-shadow: 1px 1px 1px ' + darkColor.toRgbString() + '; } \
+            ';
 
         // add to body
         custom.html(style);

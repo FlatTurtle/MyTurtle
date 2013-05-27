@@ -1,25 +1,56 @@
 <div class="header">
     <i class="calendar"></i>
-    <h2>Agenda</h2>
+    <h2>{{header}}</h2>
 </div>
-<div class="results">
+<div class="results {{size}}">
     <ul>
         {{#entries}}
-        <li>
-            <div class='info'>
-                <h3>{{summary}}</h3>
-                <p>{{location}}</p>
-            </div>
+        <li class='{{label_class}}'>
             <div class="time">
-                <p>From: {{start_time}}</p><span>{{start_date}}</span>
-                <p>To: {{end_time}}</p><span class='end_date'>{{end_date}}</span>
+                <div class='shift-right'>
+                    <span class='icon-time'></span>
+                    {{start_time}}
+                    {{#end_time}}
+                        &mdash;
+                        {{end_time}}
+                    {{/end_time}}
+                    <span class='date'>
+                        {{start_date}}
+                        {{#end_date}}
+                            &mdash;
+                            {{end_date}}
+                        {{/end_date}}
+                    </span>
+                </div>
             </div>
+            <div class='info'>
+                <div class='shift-right'>
+                    <h3>{{summary}}</h3>
+                    <p>{{{description}}}</p>
+                    {{^filter}}
+                    <p class='location'>{{location}}</p>
+                    {{/filter}}
+                </div>
+            </div>
+
+            {{#now}}
+            <div class='message bg-color-dark'>
+                NOW
+            </div>
+            {{/now}}
+            {{#next}}
+            <div class='message bg-color'>
+                NEXT
+            </div>
+            {{/next}}
         </li>
         {{/entries}}
-        {{#error}}
-        <li class='error'>
-            <span class='message'>No planned events</span>
-        </li>
-        {{/error}}
+        {{^entries}}
+            {{#error}}
+            <li class='error'>
+                <span class='message'>No planned events</span>
+            </li>
+            {{/error}}
+        {{/entries}}
     </ul>
 </div>

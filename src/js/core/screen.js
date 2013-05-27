@@ -46,6 +46,9 @@ window.Screen = (function() {
         }
         log.info(" Done adding panes");
 
+        // add a shadow div
+        $("#container").prepend('<div id="shadow-mid"></div>');
+
 
         // create turtles
         log.info(" Start creating turtles");

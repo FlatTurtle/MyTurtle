@@ -384,9 +384,20 @@ $default-color: #21aeb0;
 /* ==========================================================================
    Widget pane
    ========================================================================== */
+#shadow-mid{
+   position: absolute;
+   width: 30px;
+   height: 100%;
+   background: url(../images/shadow_left.png) no-repeat;
+   background-size: 30px 120%;
+   z-index: 500;
+   top: 0px;
+   left: 50%;
+   margin-left: -30px;
+}
+
+
 .widget {
-    -webkit-box-shadow: -3px 2px 3px 1px rgba(0, 0, 0, 0.4);
-    box-shadow: -3px 2px 3px 1px rgba(0, 0, 0, 0.4);
     color: #FFF;
 
     .turtle {

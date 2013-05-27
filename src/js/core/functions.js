@@ -200,3 +200,36 @@ function formatTime(time){
     if (diff <= 777600) return "1 week ago";
     return "on " + time;
  }
+
+
+
+var dayStrings = ['Sunday', 'Monday', 'Tuesday' , 'Wednesday', 'Thursday', 'Friday', 'Saterday'];
+ /**
+  * Format a date human readable in days
+  */
+Date.prototype.formatDateString = function(){
+    var now = new Date();
+    now .setHours(0,0,0,0);
+
+    var difference = this.getTime() - now.getTime();
+    if(difference >= 0){
+        var days = Math.floor(difference / (1000*60*60*24), 0);
+        switch(days){
+            case 0:
+                return 'Today';
+                break;
+            case 1:
+                return 'Tomorrow'
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                return dayStrings[this.getDay()];
+                break;
+
+        }
+    }
+
+    return this.format("{d}/{m}/{y}")
+}

@@ -1,39 +1,106 @@
 .turtle.calendar{
     .results{
         .info{
-            width: 65%;
-            float:left;
+            width: 96%;
+            padding: 5px 2%;
 
             *{
                 display: block;
-                margin-left: 15px;
+                margin-left: 0px;
                 float: none;
+            }
+
+            .location{
+                color:#999;
+            }
+
+            p{
+                line-height: 38px;
             }
         }
 
+        h3{
+            width: 100%;
+        }
+
+
+        li{
+            padding-top: 13px;
+            padding-bottom: 15px;
+        }
+
         .time{
-            width: 31%;
+            width: 96%;
             padding: 0 2%;
-            text-align: right;
+            margin: 0px;
             position: relative;
 
-            p{
-                text-align: right;
-                width: 70%;
-                margin:0px;
-                padding:0px;
+            .icon-time{
+                display: inline-block;
+                background:url(../images/icon_clock.png) no-repeat;
+                background-size: contain;
+                width: 20px;
+                height: 20px;
+                margin-right: 3px;
+                margin-top: 1px;;
             }
 
-            span{
-                width: 30%;
-                text-align: left;
-                font-size: 15px;
-                position: absolute;
-                left: 72%;
-                color: #aaa;
+            .date{
+                margin-left: 45px;
+                color: #999;
+            }
+        }
 
-                &.end_date{
-                    top: 40px;
+        .shift-right{
+            padding-left: 1.4%;
+        }
+
+        .now{
+            margin: 0px;
+            position: relative;
+
+            .message{
+                display: table;
+                vertical-align: middle;
+                position: absolute;
+                text-align: center;
+                color: white;
+                width: 80px;
+                height: 40px;
+                padding: 0px;
+                margin: 0px;
+                top: 50%;
+                margin-top: -25px;
+                left: 0px;
+                z-index: 400;
+            }
+
+
+            .shift-right{
+                padding-left: 90px;
+            }
+
+        }
+
+
+        &.big{
+            font-size: 1.5em;
+
+            li{
+                padding-top: 20px;
+                padding-bottom: 25px;
+            }
+
+            .now{
+
+                .message{
+                    margin-top: -35px;
+                    width: 100px;
+                }
+
+
+                .shift-right{
+                    padding-left: 115px !important;
                 }
             }
         }

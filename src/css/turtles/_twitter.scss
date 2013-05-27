@@ -6,47 +6,57 @@
 
 
     .body {
-        width: 71%;
-        padding-right: 29%;
+        width: 100%;
+        padding:0px;
+        padding-top: 65px;
+        position: relative;
+        overflow: hidden;
 
         p{
-            padding: 3%;
-            padding-bottom: 10px;
             line-height: 1.5em;
-            font-size: 25px;
+            font-weight: 300;
+            word-wrap: break-word;
+            padding: 2%;
+            padding-top: 1%;
+            position: relative;
+            font-size: 20px;
         }
 
-        span.time{
-            display: inline-block;
-            padding: 3%;
-            padding-top: 0px;
-            width: 97%;
-            text-align: right;
+        .clearfix{
+            height: 2% !important;
+            margin: 0px !important;
+            padding: 2% !important;
+            font-size: 1px !important;
         }
 
         img{
-            margin-right: 2%;
+            max-width: 18%;
             float: left;
-            max-width: 200px;
-            max-height: 100%;
+            margin-right: 2%;
+
+            &.media{
+                max-height: 96%;
+            }
         }
     }
 
     .author {
-        width: 22.5%;
-        padding: 1.5%;
-        padding-left: 2%;
+        padding: 1%;
         position: absolute;
         z-index: 2;
         top: 0px;
+        left: 0px;
+        height: 40px;
+        width: 98.1%;
         right: 0px;
-        bottom: 0px;
+        font-size: 25px;
+        line-height: 32px;
 
         img{
             margin-right: 15px;
             float: left;
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
         }
 
         h5 {
@@ -55,26 +65,78 @@
             font-weight: normal;
             margin: 0px;
             text-shadow: 1px 1px 1px rgba(0,0,0, 0.7);
+            display: inline-block;
         }
 
         .account{
             display: inline-block;
             font-size: 15px;
+            margin-left: 10px;
+        }
+
+
+        span.time{
+            display: block;
+            position: absolute;
+            top: 0px;
+            padding: 1% 0px;
+            right: 2%;
+            line-height: 38px;
+            height: 40px;
+            text-align: right;
+            z-index: 5;
+            font-size: 18px;
         }
     }
 
-    .triangle {
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-left-width: 15px;
-        border-right: 15px solid transparent;
-        border-top: 15px solid transparent;
-        border-bottom: 15px solid transparent;
-        position: absolute;
-        z-index: 555;
-        top: 25px;
-        right: 26%;
-        margin-right: -27px;
+    // Big version
+    &.big{
+        .body {
+            padding-top: 100px;
+
+            p{
+                font-size: 33px;
+                padding: 3%;
+                padding-top: 2%;
+            }
+
+            img{
+                max-width: 40%;
+            }
+        }
+
+
+        .author {
+            padding: 2%;
+            height: 60px;
+            line-height: 100%;
+            width: 96.1%;
+
+            img{
+                height: 60px;
+                width: 60px;
+            }
+
+            h5 {
+                font-size: 35px;
+                margin: 0px;
+                margin-top: 0px;
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            .account{
+                display: inline-block;
+                font-size: 22px;
+                margin-left: 0px;
+            }
+
+            span.time{
+                padding: 2% 0px;
+                font-size: 26px;
+                height: 60px;
+                line-height: 58px;
+            }
+        }
     }
 }
