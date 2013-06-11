@@ -209,7 +209,7 @@ var dayStrings = ['Sunday', 'Monday', 'Tuesday' , 'Wednesday', 'Thursday', 'Frid
   */
 Date.prototype.formatDateString = function(){
     var now = new Date();
-    now .setHours(0,0,0,0);
+    now.setHours(0,0,0,0);
 
     var difference = this.getTime() - now.getTime();
     if(difference >= 0){

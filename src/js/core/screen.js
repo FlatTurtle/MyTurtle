@@ -62,7 +62,7 @@ window.Screen = (function() {
         log.info(" Start adding plugins");
         for (var name in config.plugins) {
             // try uppercase or lowercase
-            if (window[plugin] == null) {
+            if (window[name] == null) {
                 var plugin = window[name.charAt(0).toUpperCase() + name.slice(1)];
             } else {
                 var plugin = window[name];

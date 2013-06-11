@@ -266,7 +266,7 @@
         render : function() {
             // only render when template file is loaded
             if (this.template && (this.options.error || this.options.connections != null || this.options.liveboard != null)) {
-                if(this.options.route_type == "mivb"){
+                if(this.options.route_type != "nmbs"){
                     this.options.liveboard.location = new Object();
                     this.options.liveboard.location.name = this.options.location;
                 }

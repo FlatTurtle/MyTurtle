@@ -56,7 +56,10 @@
         },
         refresh : function() {
             var self = this;
-
+            if(typeof application !== "undefined"){
+                application.clearCache();
+            }
+            
             if (self.map != null) {
                 google.maps.event.trigger(self.map, "resize");
                 self.map.setCenter(self.center);
@@ -64,7 +67,6 @@
         },
         render : function() {
             var self = this;
-
             $.get("turtles/map/views/widget.html", function(template) {
                 var data = {
                     location : self.options.location

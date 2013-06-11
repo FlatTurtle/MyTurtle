@@ -21,7 +21,7 @@
 
              // automatic collection refresh
             setTimeout(function(){
-                refreshInterval = setInterval(refresh, 900000);
+                refreshInterval = setInterval(self.refresh, 900000);
             }, Math.round(Math.random()*5000));
          },
          configure : function() {

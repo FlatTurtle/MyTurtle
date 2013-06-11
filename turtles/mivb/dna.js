@@ -76,7 +76,7 @@
         },
         url : function() {
             var today = new Date();
-            var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/") + "15/00"; //{H}/{M}");
+            var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
             // remote source url
             return "https://data.irail.be/MIVBSTIB/Departures/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);;
