@@ -46,11 +46,12 @@
             // stop point mode
             if (this.options.stop_point != "")
             {
-                $.getJSON("https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_points/" + this.options.stop_point, function(data)
+		var q = "https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_points/" + this.options.stop_point;
+                $.getJSON("https://data.flatturtle.com/navitia_proxy.php?" + q, function(data)
                 {
-                    self.options.latitude = parseFloat(data.stop_points[0].coord.lat);
-                    self.options.longitude = parseFloat(data.stop_points[0].coord.lon);
-                    self.options.location = data.stop_points[0].name.capitalize();
+                    self.options.latitude = parseFloat(data.contents.stop_points[0].coord.lat);
+                    self.options.longitude = parseFloat(data.contents.stop_points[0].coord.lon);
+                    self.options.location = data.contents.stop_points[0].name.capitalize();
                 });
 
                 // fetch data
@@ -60,11 +61,12 @@
             // stop area mode
             else if (this.options.stop_area != "")
             {
-                $.getJSON("https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area, function(data)
+		var q = "https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area;
+                $.getJSON("https://data.flatturtle.com/navitia_proxy.php?" + q, function(data)
                 {
-                    self.options.latitude = parseFloat(data.stop_areas[0].coord.lat);
-                    self.options.longitude = parseFloat(data.stop_areas[0].coord.lon);
-                    self.options.location = data.stop_areas[0].name.capitalize();
+                    self.options.latitude = parseFloat(data.contents.stop_areas[0].coord.lat);
+                    self.options.longitude = parseFloat(data.contents.stop_areas[0].coord.lon);
+                    self.options.location = data.contents.stop_areas[0].name.capitalize();
                 });
 
                 // fetch data
@@ -74,11 +76,12 @@
             // search mode
             else
             {
-                $.getJSON("https://api.navitia.io/v1/coverage/" + this.options.region + "/places?q=" + encodeURIComponent(this.options.location) + "&type[]=stop_area&count=1", function(data)
+		var q = "https://api.navitia.io/v1/coverage/" + self.options.region + "/places?q=" + self.options.location + "&type[]=stop_area&count=1";
+                $.getJSON("https://data.flatturtle.com/navitia_proxy.php?" + q, function(data)
                 {
-                    self.options.stop_area = data.places[0].stop_area.id;
-                    self.options.latitude = parseFloat(data.places[0].stop_area.coord.lat);
-                    self.options.longitude = parseFloat(data.places[0].stop_area.coord.lon);
+                    self.options.stop_area = data.contents.places[0].id;
+                    self.options.latitude = parseFloat(data.contents.places[0].lat);
+                    self.options.longitude = parseFloat(data.contents.places[0].lon);
 
                     // fetch data
                     self.fetch();
@@ -109,26 +112,27 @@
 
             if (this.options.stop_point)
             {
-                return "https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_points/" + this.options.stop_point + "/departures?from_datetime=" + query;
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_points/" + this.options.stop_point + "/departures?from_datetime=" + query;
             }
             else if (this.options.mode)
             {
-                return "https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/commercial_modes/commercial_mode:" + this.options.mode.toLowerCase() + "/departures?from_datetime=" + query;
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/commercial_modes/commercial_mode:" + this.options.mode.toLowerCase() + "/departures?from_datetime=" + query;
             }
             else
             {
-                if(this.options.stop_area == "")
-                    return "https://api.navitia.io/v1/coverage/" + this.options.region;
-                return "https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/departures?from_datetime=" + query;
+                if(this.options.stop_area == ""){
+                    return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region;
+		}
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/departures?from_datetime=" + query;
             }
         },
 
         parse : function(json)
         {
             log.info("TURTLE - NAVITIA - Parse results");
-            var liveboard = json.departures;
+            var liveboard = json.contents.departures;
             var lines = new Array();
-          
+
             for (var i in liveboard)
             {
             	// set lng lat
@@ -136,7 +140,7 @@
             	{
             		this.options.latitude = parseFloat(liveboard[i].stop_point.coord.lat);
             		this.options.longitude = parseFloat(liveboard[i].stop_point.coord.lon);
-            		this.options.location = liveboard[i].stop_point.name.capitalize();
+            		//this.options.location = liveboard[i].stop_point.name.capitalize();
             	}
 
             	// use gray as default background color
