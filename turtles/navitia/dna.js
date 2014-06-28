@@ -241,6 +241,17 @@
                     // add html to container
                     this.$el.empty();
                     this.$el.html(Mustache.render(this.template, data));
+                }else{
+                    var data = {
+                        location: this.options.location,
+                        type: this.options.icon,
+                        time_walk : this.options.time_walk,
+                        empty: this.collection.length == 0,
+                        error: true
+                    }
+                    // add html to container
+                    this.$el.empty();
+                    this.$el.html(Mustache.render(this.template, data));
                 }
             }        
         },
