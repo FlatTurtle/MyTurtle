@@ -227,7 +227,8 @@
                
                 var entries = this.collection.toJSON();
                 if(entries.length > 0){
-                    entries.length = this.options.limit;
+                    if(entries.length > this.options.limit)
+                        entries.length = this.options.limit;
 
                     var data = {
                         location: this.options.location,
