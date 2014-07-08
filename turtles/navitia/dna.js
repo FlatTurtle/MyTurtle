@@ -112,18 +112,18 @@
 
             if (this.options.stop_point)
             {
-                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_points/" + this.options.stop_point + "/departures?from_datetime=" + query;
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_points/" + this.options.stop_point + "/departures?from_datetime=" + query + "&count=" + this.options.limit;
             }
             else if (this.options.mode)
             {
-                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/commercial_modes/commercial_mode:" + this.options.mode.toLowerCase() + "/departures?from_datetime=" + query;
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/commercial_modes/commercial_mode:" + this.options.mode.toLowerCase() + "/departures?from_datetime=" + query + "&count=" + this.options.limit;
             }
             else
             {
                 if(this.options.stop_area == ""){
                     return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region;
 		}
-                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/departures?from_datetime=" + query;
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/departures?from_datetime=" + query + "&count=" + this.options.limit;
             }
         },
 
