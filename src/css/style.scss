@@ -240,6 +240,7 @@ $default-color: #21aeb0;
             background-image: url(../images/FT__0003_tram.png);
             padding: 0;
         }
+
         .train {
             background-image: url(../images/FT__0009_train.png);
             padding: 0; 
@@ -384,7 +385,7 @@ $default-color: #21aeb0;
 /* ==========================================================================
    De Lijn
    ========================================================================== */
-.results .square .tram,.results .square .bus {
+.results .square .tram,.results .square .bus,.results .square .train {
     margin: 0;
     background-color: #ccc;
 }
