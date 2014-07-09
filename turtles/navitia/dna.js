@@ -159,6 +159,23 @@
             	// A date time from the API comes in the format: YYYYMMDDTHHMMSS
             	var time = liveboard[i].stop_date_time.departure_date_time.replace(/^(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d)$/,'$4:$5');
                 liveboard[i].time = time;
+                
+                // Find proper icon and set in route.icon
+                var selected = liveboard[i].route.line.code;
+                if (typeof selected == 'string'){
+                    if (selected.length == 1){
+                        if (selected >= 'A' && selected <= 'E') liveboard[i].route.icon = "rer";
+                        else if (selected >= 'H' && selected <= 'U') liveboard[i].route.icon = "train";
+                        else liveboard[i].route.icon = "bus";
+                    }else{
+                        if (selected.charAt(0) == 'T') liveboard[i].route.icon = "tram";
+                        else liveboard[i].route.icon = "bus";
+                    }
+                }else if(selected){
+                    if (selected <= 14) liveboard[i].route.icon = "metro";
+                    else liveboard[i].route.icon = "bus";
+                }
+
 
                 // increment line popularity
                 lines[liveboard[i].route.line.code] = lines[liveboard[i].route.line.code] ? lines[liveboard[i].route.line.code]+1 : 1;
