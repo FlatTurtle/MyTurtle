@@ -209,7 +209,7 @@
             }
             else if (selected)
             {
-                if (selected <= 14) this.options.icon = "metro";
+                if (selected <= 14) this.options.icon = "tram";
                 else this.options.icon = "bus";
             }
 
