@@ -172,7 +172,7 @@
                         else liveboard[i].route.icon = "bus";
                     }
                 }else if(selected){
-                    if (selected <= 14) liveboard[i].route.icon = "metro";
+                    if (selected <= 14) liveboard[i].route.icon = "tram";
                     else liveboard[i].route.icon = "bus";
                 }
 
