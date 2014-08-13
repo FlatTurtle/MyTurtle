@@ -172,7 +172,7 @@ $default-color: #21aeb0;
             background-image: url(../images/turtle_header_plane.png);
         }
 
-        .tram.bus {
+        .tram {
             background-image: url(../images/turtle_header_tram.png);
         }
 
@@ -182,6 +182,10 @@ $default-color: #21aeb0;
 
         .bus {
             background-image: url(../images/turtle_header_bus.png);
+        }
+
+        .metro {
+             background-image: url(../images/turtle_header_metro.png);
         }
 
         .calendar {
