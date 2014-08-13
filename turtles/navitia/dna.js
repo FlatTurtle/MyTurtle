@@ -112,18 +112,18 @@
 
             if (this.options.stop_point)
             {
-                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_points/" + this.options.stop_point + "/departures?from_datetime=" + query + "&count=" + this.options.limit;
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_points/" + this.options.stop_point + "/departures?from_datetime=" + query + "&count=" + 20 + this.options.limit;
             }
             else if (this.options.mode)
             {
-                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/commercial_modes/commercial_mode:" + this.options.mode.toLowerCase() + "/departures?from_datetime=" + query + "&count=" + this.options.limit;
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/commercial_modes/commercial_mode:" + this.options.mode.toLowerCase() + "/departures?from_datetime=" + query + "&count=" + 20 + this.options.limit;
             }
             else
             {
                 if(this.options.stop_area == ""){
                     return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region;
 		}
-                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/departures?from_datetime=" + query + "&count=" + this.options.limit;
+                return "https://data.flatturtle.com/navitia_proxy.php?https://api.navitia.io/v1/coverage/" + this.options.region + "/stop_areas/" + this.options.stop_area + "/departures?from_datetime=" + query + "&count=" + 20 + this.options.limit;
             }
         },
 
@@ -162,7 +162,10 @@
                 
                 // Find proper icon and set in route.icon
                 var selected = liveboard[i].route.line.code;
-                if (typeof selected == 'string'){
+                if(parseInt(selected) <= 14){
+                    liveboard[i].route.icon = "metro";
+                }
+                else if (typeof selected == 'string'){
                     if (selected.length == 1){
                         if (selected >= 'A' && selected <= 'E') liveboard[i].route.icon = "rer";
                         else if (selected >= 'H' && selected <= 'U') liveboard[i].route.icon = "train";
@@ -172,7 +175,7 @@
                         else liveboard[i].route.icon = "bus";
                     }
                 }else if(selected){
-                    if (selected <= 14) liveboard[i].route.icon = "tram";
+                    if (selected <= 14) liveboard[i].route.icon = "metro";
                     else liveboard[i].route.icon = "bus";
                 }
 
@@ -193,7 +196,10 @@
             }
 
             // choose the icon based on the line
-            if (typeof selected == 'string')
+            if(parseInt(selected) <= 14){
+                this.options.icon = "metro";
+            }
+            else if (typeof selected == 'string')
             {
                 if (selected.length == 1)
                 {
@@ -209,7 +215,7 @@
             }
             else if (selected)
             {
-                if (selected <= 14) this.options.icon = "tram";
+                if (selected <= 14) this.options.icon = "metro";
                 else this.options.icon = "bus";
             }
 
