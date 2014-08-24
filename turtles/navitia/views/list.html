@@ -29,9 +29,17 @@
         </li>
         {{/entries}}
         {{#error}}
-        <li class='error'>
-            <span class='message'>No connections</span>
-        </li>
+            {{#underConstruction}}
+                <li class='error'>
+                    <span class='message'>Station en construction</span>
+                </li>
+            {{/underConstruction}}
+
+            {{^underConstruction}}
+                <li class='error'>
+                    <span class='message'>Pas de v<C3><A9>hicules <C3><A0> ce moment</span>
+                </li>
+            {{/underConstruction}}
         {{/error}}
     </ul>
 </div>
