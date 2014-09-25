@@ -48,7 +48,7 @@
         parse: function(json) {
             var self = this;
             $.each(json.photos.photo, function(i,photo){
-                var img_src = "http://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + "_b.jpg";
+                var img_src = "https://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + "_b.jpg";
                 self.options.images.push(img_src);
             });
         },
