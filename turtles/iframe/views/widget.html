@@ -1,0 +1,22 @@
+
+<style> 
+#wrap { padding: 0; position:relative; overflow: hidden; }
+#frame{
+        -moz-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+    }
+</style>
+
+<div id="wrap" style="width: {{zpercent}}; height: {{zpercent}};">
+<iframe id="frame" src="{{link}}" scrolling="no" frameborder="0" style="border: 0px none transparent; width: 100%; height: 100%;"></iframe>
+</div>
+
+<script>
+$('#frame').css({
+    "webkitTransform":"scale({{zoom}})",
+    "MozTransform":"scale({{zoom}})",
+    "OTransform":"scale({{zoom}})",
+    "transform":"scale({{zoom}})"
+});
+</script>
