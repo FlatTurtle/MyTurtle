@@ -53,6 +53,14 @@
 				self.$el.addClass('nopadding');
 				self.$el.html(Mustache.render(template, data));
 			});
+
+            // Because we change frame parameters etc. things tend to go wrong with some sites
+            // Do a reload of the content after 30 seconds once all should be stable. 
+            // TODO: figure out what really goes on and fix it properly.
+            setTimeout(function(){
+                $( '#frame' ).attr( 'src', function ( i, val ) { return val; });
+            }, 30000);
+
         }
     });
 
