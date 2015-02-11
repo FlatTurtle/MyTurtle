@@ -144,10 +144,10 @@
                         self.center = results[0].geometry.location;
                         self.map.setCenter(self.center);
 
-                        //var marker = new google.maps.Marker({
-                        //    map: self.map,
-                        //    position: results[0].geometry.location
-                        //});
+                        var marker = new google.maps.Marker({
+                            map: self.map,
+                            position: results[0].geometry.location
+                        });
 
                         // add traffic layer
                         setTimeout(function() {
