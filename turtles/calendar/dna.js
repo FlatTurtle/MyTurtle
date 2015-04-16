@@ -5,6 +5,9 @@
  */
 
 (function($) {
+    var id;
+    var refresh_data;
+    var refresh_self;
 
     var collection = Backbone.Collection.extend({
 
@@ -22,16 +25,17 @@
             this.on("reconfigure", this.configure);
 
             setTimeout(function(){
-                refreshInterval = setInterval(self.refresh, 300000);
+                refresh_self = setInterval(self.refresh, 300000);
             }, Math.round(Math.random()*5000));
 
 
             setTimeout(function(){
-                refreshInterval = setInterval(self.refreshData, 60000);
+                refresh_data = setInterval(self.refreshData, 60000);
             }, Math.round(Math.random()*5000));
         },
         configure : function() {
-
+            /* Save this instance id here. Will be gone afterwards... */
+            id = this.options.id;
             this.trigger("reset");
         },
         refresh : function() {
@@ -131,6 +135,18 @@
                     // Check if an event is coming up
                     data[i].label_class = "now";
                     data[i].next = true;
+                }
+            }
+            
+            /* There is no data to show */
+            if(typeof calendar[0] == 'undefined') {
+                /* Do we have to remove the calendar? */
+                if(this.options.removeempty == true){
+                    /* Remove the interval timers first */
+                    clearInterval(refresh_self);
+                    clearInterval(refresh_data);
+                    /* Kill the instance */
+                    Turtles.kill(id);
                 }
             }
 
