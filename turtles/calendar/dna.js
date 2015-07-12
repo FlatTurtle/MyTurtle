@@ -82,6 +82,14 @@
             for(var i in data){
                 // Check if event is happening now or in the future
                 if(data[i].end*1000 > now_unix){
+                    // Check if event is today, and only today's events should be shown
+                    if(this.options.todayonly == true){
+                        var event_date = new Date(data[i].end*1000);
+                        if(event_date.getDate() != now.getDate() || event_date.getMonth() != now.getMonth() || event_date.getYear() != now.getYear()){
+                            //Skip event if so
+                            continue;       
+                        }
+                    }
                     // Check filter based on location
                     if((this.options.filter && this.options.filter.length > 0 && data[i].location.toLowerCase() == this.options.filter.toLowerCase()) ||
                         (!this.options.filter || this.options.filter == "")){
