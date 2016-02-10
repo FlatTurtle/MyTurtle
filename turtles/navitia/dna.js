@@ -167,7 +167,12 @@
                 }
                 else if (typeof selected == 'string'){
                     if (selected.length == 1){
-                        if (selected >= 'A' && selected <= 'E') liveboard[i].route.icon = "rer";
+                        if (selected >= 'A' && selected <= 'E') {
+                            if (liveboard[i].route.line.color == "000000")
+                                liveboard[i].route.icon = "bus";
+                            else
+                                liveboard[i].route.icon = "rer";
+                        }
                         else if (selected >= 'H' && selected <= 'U') liveboard[i].route.icon = "train";
                         else liveboard[i].route.icon = "bus";
                     }else{
@@ -178,7 +183,6 @@
                     if (selected <= 14) liveboard[i].route.icon = "metro";
                     else liveboard[i].route.icon = "bus";
                 }
-
 
                 // increment line popularity
                 lines[liveboard[i].route.line.code] = lines[liveboard[i].route.line.code] ? lines[liveboard[i].route.line.code]+1 : 1;
@@ -203,7 +207,12 @@
             {
                 if (selected.length == 1)
                 {
-                    if (selected >= 'A' && selected <= 'E') this.options.icon = "rer";
+                    if (selected >= 'A' && selected <= 'E'){ 
+                        if (liveboard[max].route.line.color == "000000")
+                            this.options.icon = "bus";
+                        else
+                            this.options.icon = "rer";
+                    }
                     else if (selected >= 'H' && selected <= 'U') this.options.icon = "train";
                     else this.options.icon = "bus";
                 }
