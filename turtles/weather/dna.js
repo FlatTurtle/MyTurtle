@@ -49,6 +49,8 @@
             var self = this;
             var latitude = self.options.location.split(',')[0];
             var longitude = self.options.location.split(',')[1];
+            latitude = Math.round(latitude*100)/100;
+            longitude = Math.round(latitude*100)/100;
             return "https://data.flatturtle.com/Weather/Rainfall/" + encodeURIComponent(latitude) + "/" + encodeURIComponent(longitude) + ".json";
         },
         parse : function(json) {
