@@ -79,14 +79,16 @@
             var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
             // remote source url
-            return "https://data.irail.be/MIVBSTIB/Departures/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);;
+            return "https://data.irail.be/MIVBSTIB/Departures/" + query + ".json";//?offset=0&rowcount=" + parseInt(this.options.limit);;
         },
         parse : function(json) {
             // parse ajax results
             var liveboard = json.Departures;
             this.options.error = false;
-
             if(liveboard.length > 0){
+                if (this.options.limit) {
+                  liveboard.splice(this.options.limit);
+                }
                 for (var i in liveboard) {
                     if(liveboard[i].time){
                         var time = new Date(liveboard[i].time * 1000);
