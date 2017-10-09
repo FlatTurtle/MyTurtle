@@ -16,6 +16,11 @@ Features
 Useful links
 ============
 
+Quickly set up a screen:
+ 1. Set up your index.php according to the example
+ 2. Add a `.json` file according to the DISCS spec
+ 3. `php -S localhost:5000`
+
 * [Installation](https://github.com/FlatTurtle/MyTurtle/blob/master/INSTALL.md#installation)
 * [Make your own](https://github.com/FlatTurtle/MyTurtle/blob/master/DEVELOPMENT.md#development)
 

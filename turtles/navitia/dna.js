@@ -268,7 +268,7 @@
                         entries: entries,
                         time_walk : this.options.time_walk,
                         empty: this.collection.length == 0,
-                        underConstruction: this.options.stop_point == 'stop_point:RTF:SP:BAGNE1' 
+                        underConstruction: (this.options.stop_point == 'stop_point:RTF:SA:BAGNE' || this.options.stop_area == 'stop_area:RTF:SA:BAGNE'),
                     };
 
                     // add html to container
@@ -280,6 +280,7 @@
                         type: this.options.icon,
                         time_walk : this.options.time_walk,
                         empty: this.collection.length == 0,
+                        underConstruction: (this.options.stop_point == 'stop_point:RTF:SA:BAGNE' || this.options.stop_area == 'stop_area:RTF:SA:BAGNE'),
                         error: true
                     }
                     // add html to container

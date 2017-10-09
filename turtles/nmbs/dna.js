@@ -60,13 +60,11 @@
                 }
             }
 
-            var today = new Date();
-            var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
-
-            var self = this;
-            $.getJSON("https://data.irail.be/NMBS/Liveboard/" + query + ".json", function(data) {
-                if (data.Liveboard.location.name != undefined) {
-                    self.options.station = data.Liveboard.location.name.capitalize();
+          var self = this;
+          
+            $.getJSON("https://api.irail.be/liveboard/?station=" + encodeURIComponent(this.options.location) + "&format=json", function(data) {
+                if (data.station != undefined) {
+                    self.options.station = data.station.capitalize();
                     self.trigger("reset");
                 }
             });
@@ -90,97 +88,99 @@
         },
         url : function() {
             var today = new Date();
-            var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
-
-            return "https://data.irail.be/spectql/NMBS/Liveboard/" + query + "/departures.limit(" + parseInt(this.options.limit) + "):json";
-        }
-        ,
+            return "https://api.irail.be/liveboard/?station=" + this.options.location + "&format=json";
+        },
+      
         parse : function(json) {
             var self = this;
 
             this.options.error = false;
+        
+            // parse ajax results
+            this.liveboard = null;
+            this.liveboard = json.departures.departure;
 
-            // only parse when the results are new
-            var newhash = JSON.stringify(json.spectql).hashCode();
-            if(newhash != this.liveboardhash){
-                this.liveboardhash = newhash;
-
-                // parse ajax results
-                this.liveboard = null;
-                this.liveboard = json.spectql;
-
-
-                if(this.liveboard.length > 0){
-                    // abort previous request
-                    if(this.connectionsRequest)
-                        this.connectionsRequest.abort();
-                    this.connectionsRequest = null;
-
-                    var vehicle = {};
-
-                    // loop throught train results
-                    for (var i in this.liveboard) {
-
-                        // append vehicle to list
-                        if(this.liveboard[i].vehicle){
-                            var current_vehicle = encodeURIComponent(this.liveboard[i].vehicle);
-                            if(current_vehicle.length > 0){
-                                vehicle[current_vehicle] = true;
-                            }
-                        }
-
-                        if(this.liveboard[i].time){
-                            var time = new Date(this.liveboard[i].time * 1000);
-                            this.liveboard[i].time = time.format("{H}:{M}");
-
-                            if (this.liveboard[i].delay) {
-                                this.liveboard[i].delay = formatTime(this.liveboard[i].delay/60);
-                            }
-                        }
-
-                        if (this.liveboard[i].direction){
-                            this.liveboard[i].direction = this.liveboard[i].direction.capitalize();
-                        }
-
-                        if (!this.liveboard[i].platform.name)
-                            this.liveboard[i].platform.name = "-";
-
-                        this.liveboard[i].type = this.liveboard[i].vehicle.match(/\.([a-zA-Z]+)[0-9]+$/)[1];
-                        if (!this.liveboard[i].type)
-                            this.liveboard[i].type = "-";
-                    }
-
-
-                    // If there is a via configured, fetch vehicle results
-                    if(this.options.destination && $.isArray(this.options.destination)){
-                        // build vehicle string from "set"
-                        var vehicle_ids = "";
-                        var first_vehicle = true;
-                        for(var v in vehicle){
-                            if(!first_vehicle){
-                                vehicle_ids += ",";
-                            }
-                            vehicle_ids += v;
-                            first_vehicle = false;
-                        }
-
-                        this.connectionsRequest = $.ajax({
-                            url: "https://data.flatturtle.com/NMBS/Vehicles/"+ vehicle_ids + ".json",
-                            async: true,
-                            datatype: "json",
-                            success: function(data){
-                                self.matchConnections(data);
-
-                            }
-                        });
-                    }
-
-                    self.trigger("reset");
-                }else{
-                    this.options.error = true;
-                }
+            if (this.options.limit) {
+                this.liveboard.splice(this.options.limit);
             }
+        
 
+            if(this.liveboard.length > 0){
+                // abort previous request
+                if(this.connectionsRequest)
+                  this.connectionsRequest.abort();
+                this.connectionsRequest = null;
+
+                var vehicle = {};
+              
+                // loop through train results
+                for (var i in this.liveboard) {
+
+                    // append vehicle to list
+                    if(this.liveboard[i].vehicle){
+                        var current_vehicle = encodeURIComponent(this.liveboard[i].vehicle);
+                        if(current_vehicle.length > 0){
+                            vehicle[current_vehicle] = true;
+                        }
+                    }
+
+                    if (this.liveboard[i].time){
+                        this.liveboard[i].time = parseInt(this.liveboard[i].time);
+                        var time = new Date(this.liveboard[i].time * 1000);
+                        this.liveboard[i].time = time.format("{H}:{M}");
+
+                        if (this.liveboard[i].delay) {
+                            if (this.liveboard[i].delay > 0)
+                                this.liveboard[i].delay = formatTime(this.liveboard[i].delay/60);
+                            else
+                                delete (this.liveboard[i].delay);
+                        }
+                    }
+                  
+                    if (this.liveboard[i].station){
+                        this.liveboard[i].direction = this.liveboard[i].station.capitalize();
+                    }
+
+                    if (!this.liveboard[i].platform) {
+                        this.liveboard[i].platform = {};
+                        this.liveboard[i].platform.name = "-";
+                    } else {
+                        this.liveboard[i].platform = { name : this.liveboard[i].platform };
+                    }
+
+                    this.liveboard[i].type = this.liveboard[i].vehicle.match(/\.([a-zA-Z]+)[0-9]+$/)[1];
+                    if (!this.liveboard[i].type)
+                        this.liveboard[i].type = "-";
+                }
+
+
+                // If there is a via configured, fetch vehicle results
+                if(this.options.destination && $.isArray(this.options.destination)){
+                    // build vehicle string from "set"
+                    var vehicle_ids = "";
+                    var first_vehicle = true;
+                    for(var v in vehicle){
+                        if(!first_vehicle){
+                            vehicle_ids += ",";
+                        }
+                        vehicle_ids += v;
+                        first_vehicle = false;
+                    }
+
+                    this.connectionsRequest = $.ajax({
+                        url: "https://data.flatturtle.com/NMBS/Vehicles/"+ vehicle_ids + ".json",
+                        async: true,
+                        datatype: "json",
+                        success: function(data){
+                            self.matchConnections(data);
+                        }
+                    });
+                }
+
+                self.trigger("reset");
+            } else {
+                this.options.error = true;
+            }
             return this.liveboard;
         },
         matchConnections : function(data){
@@ -190,23 +190,19 @@
                 json = JSON.parse(data);
                 data = json;
             } catch (e) {}
-
             data = data.Vehicles;
 
             // match results from vehicles stops with via's
             for (var i in this.liveboard) {
                 if(this.liveboard[i].vehicle){
                     var current_vehicle = this.liveboard[i].vehicle;
-
                     // check if data contains the right information
                     if(data[current_vehicle] &&
-                       data[current_vehicle].stops &&
-                       data[current_vehicle].stops.stop &&
-                       data[current_vehicle].stops.stop.length > 2){
-
-                        var stoparray = data[current_vehicle].stops.stop;
-
-                        // ignore the first value (start station)
+                         data[current_vehicle].stops &&
+                         data[current_vehicle].stops.stop &&
+                         data[current_vehicle].stops.stop.length > 2){
+                         var stoparray = data[current_vehicle].stops.stop;
+                         // ignore the first value (start station)
                         var pastStart = false;
                         // loop through all but the last one (end station)
                         for(var j=0; j<stoparray.length-1 ; j++){

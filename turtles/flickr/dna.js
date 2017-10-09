@@ -31,7 +31,7 @@
 		configure : function(){
             var self = this;
             
-            self.options.flickrApiKey = 'API KEY HERE';
+            self.options.flickrApiKey = 'a59dd4b0e5f753a691ef9a2926b52cb1';
             self.options.apiCall = 'https://api.flickr.com/services/rest/?format=json&method=flickr.photos.search&user_id='+self.options.userid+'&api_key='+self.options.flickrApiKey+'&jsoncallback=?&per_page='+self.options.limit;
             
             this.trigger("refresh");

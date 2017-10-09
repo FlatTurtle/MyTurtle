@@ -12,8 +12,10 @@ if($size > 5242880){
 $fh = fopen($log_file, 'a') or die("Can't write to logs folder, make it writable");
 
 // Add the log line to file
-$data = $_POST['data'] . "\n";
+if (array_key_exists('data', $_POST)) {
+    $data = $_POST['data'] . "\n";
+    fwrite($fh, $data);
+}
 
-// Write and close
-fwrite($fh, $data);
+// Close
 fclose($fh);
