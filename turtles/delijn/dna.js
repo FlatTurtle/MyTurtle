@@ -87,13 +87,16 @@
             var query = encodeURIComponent(this.options.location) + "/" + today.format("{Y}/{m}/{d}/{H}/{M}");
 
             // remote source url - todo: add departures or arrivals
-            return "https://data.irail.be/DeLijn/" + this.options.type.capitalize()  + "/" + query + ".json?offset=0&rowcount=" + parseInt(this.options.limit);
+            return "https://data.irail.be/DeLijn/" + this.options.type.capitalize()  + "/" + query + ".json";
         },
         parse : function(json) {
             log.info("TURTLE - DELIJN - Parse results");
 
             // parse ajax results
             var liveboard = json[this.options.type.capitalize()];
+            if (this.options.limit) {
+              liveboard.splice(this.options.limit);
+            }
             this.options.error = false;
 
             if(liveboard.length > 0){
